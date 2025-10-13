@@ -23,18 +23,18 @@ const Hero = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground leading-tight">
-            Banking Made Simple,
+            Your Money, Simplified.
             <span className="bg-gradient-to-r from-accent to-orange-500 bg-clip-text text-transparent"> Powered by Bitcoin</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
-            Experience the future of finance without the complexity. Save, send, and manage money with the security of Bitcoin and the simplicity of traditional banking.
+            Send, save, and manage your money like any banking app. No crypto knowledge needed. Just simple, secure financial freedom.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
             <Link to="/wallet">
               <Button variant="hero" size="xl" className="group">
-                Connect Wallet
+                Get Started
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
@@ -46,16 +46,16 @@ const Hero = () => {
 
           <div className="grid grid-cols-3 gap-8 pt-12 max-w-2xl mx-auto">
             <div className="text-center space-y-1">
-              <div className="text-3xl font-bold text-accent">0%</div>
-              <div className="text-sm text-muted-foreground">Hidden Fees</div>
+              <div className="text-3xl font-bold text-accent">Instant</div>
+              <div className="text-sm text-muted-foreground">Transfers</div>
             </div>
             <div className="text-center space-y-1">
-              <div className="text-3xl font-bold text-accent">24/7</div>
-              <div className="text-sm text-muted-foreground">Support</div>
+              <div className="text-3xl font-bold text-accent">$0</div>
+              <div className="text-sm text-muted-foreground">Monthly Fees</div>
             </div>
             <div className="text-center space-y-1">
-              <div className="text-3xl font-bold text-accent">100%</div>
-              <div className="text-sm text-muted-foreground">Secure</div>
+              <div className="text-3xl font-bold text-accent">4.5%</div>
+              <div className="text-sm text-muted-foreground">Savings APY</div>
             </div>
           </div>
         </div>

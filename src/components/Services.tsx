@@ -6,21 +6,21 @@ import remittanceIcon from "@/assets/remittance-icon.png";
 const services = [
   {
     icon: savingsIcon,
-    title: "Bitcoin Savings",
-    description: "Grow your wealth with Bitcoin-backed savings accounts. Earn competitive returns while maintaining full control of your assets.",
-    features: ["High yield returns", "Instant withdrawals", "FDIC-style protection"]
+    title: "Smart Savings",
+    description: "Put your money to work with high-yield savings accounts. Watch your balance grow automatically.",
+    features: ["4.5% Annual Return", "Withdraw anytime", "MUSD stablecoin"]
   },
   {
     icon: paymentsIcon,
-    title: "Instant Payments",
-    description: "Send and receive money instantly anywhere in the world. Lightning-fast transactions with minimal fees.",
-    features: ["Zero processing fees", "Real-time settlement", "Multi-currency support"]
+    title: "Send & Request",
+    description: "Send money to anyone instantly. Split bills, pay friends, or send money home - all in seconds.",
+    features: ["Zero fees", "Instant delivery", "Request payments"]
   },
   {
     icon: remittanceIcon,
-    title: "Global Remittance",
-    description: "Send money home without the hassle. Lower fees, better rates, and faster delivery than traditional services.",
-    features: ["Best exchange rates", "Track in real-time", "Trusted by millions"]
+    title: "International",
+    description: "Send money across borders without the high fees. Best exchange rates, guaranteed.",
+    features: ["190+ countries", "Real-time tracking", "Lower than banks"]
   }
 ];
 
@@ -30,10 +30,10 @@ const Services = () => {
       <div className="container mx-auto">
         <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
-            Everything You Need
+            Simple Financial Services
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Simple, powerful financial services that work for everyone
+            Everything you need to manage your money, without the complexity
           </p>
         </div>
 

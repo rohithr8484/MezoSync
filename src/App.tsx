@@ -8,6 +8,7 @@ import { RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { config } from "./lib/wagmi-config";
 import Index from "./pages/Index";
 import WalletPage from "./pages/WalletPage";
+import Dashboard from "./pages/Dashboard";
 import NotFound from "./pages/NotFound";
 import "@rainbow-me/rainbowkit/styles.css";
 
@@ -24,6 +25,7 @@ const App = () => (
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/wallet" element={<WalletPage />} />
+              <Route path="/dashboard" element={<Dashboard />} />
               {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
               <Route path="*" element={<NotFound />} />
             </Routes>
