@@ -1,5 +1,5 @@
 import { Card, CardContent } from "@/components/ui/card";
-import { Send, Download, PiggyBank, RefreshCw } from "lucide-react";
+import { Send, Download, PiggyBank } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import SendMoneyDialog from "./SendMoneyDialog";
@@ -33,13 +33,6 @@ const QuickActions = () => {
       onClick: () => setSaveDialogOpen(true),
       variant: "heroOutline" as const,
     },
-    {
-      icon: RefreshCw,
-      label: "Convert",
-      description: "Exchange instantly",
-      onClick: () => {},
-      variant: "heroOutline" as const,
-    },
   ];
 
   return (
@@ -47,7 +40,7 @@ const QuickActions = () => {
       <Card>
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-3 gap-4">
             {actions.map((action, index) => {
               const Icon = action.icon;
               return (
