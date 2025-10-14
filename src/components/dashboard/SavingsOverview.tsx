@@ -2,8 +2,11 @@ import { Card, CardContent } from "@/components/ui/card";
 import { PiggyBank, TrendingUp, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import { useState } from "react";
+import AddToSavingsDialog from "./AddToSavingsDialog";
 
 const SavingsOverview = () => {
+  const [addDialogOpen, setAddDialogOpen] = useState(false);
   const savingsBalance = "1,850.00";
   const savingsGoal = "5,000.00";
   const progress = (1850 / 5000) * 100;
@@ -42,11 +45,13 @@ const SavingsOverview = () => {
             </p>
           </div>
 
-          <Button variant="hero" className="w-full">
+          <Button variant="hero" className="w-full" onClick={() => setAddDialogOpen(true)}>
             Add to Savings
           </Button>
         </CardContent>
       </Card>
+
+      <AddToSavingsDialog open={addDialogOpen} onOpenChange={setAddDialogOpen} />
 
       <Card>
         <CardContent className="p-6 space-y-4">

@@ -3,9 +3,13 @@ import { Send, Download, PiggyBank, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import SendMoneyDialog from "./SendMoneyDialog";
+import ReceiveMoneyDialog from "./ReceiveMoneyDialog";
+import AddToSavingsDialog from "./AddToSavingsDialog";
 
 const QuickActions = () => {
   const [sendDialogOpen, setSendDialogOpen] = useState(false);
+  const [receiveDialogOpen, setReceiveDialogOpen] = useState(false);
+  const [saveDialogOpen, setSaveDialogOpen] = useState(false);
 
   const actions = [
     {
@@ -19,14 +23,14 @@ const QuickActions = () => {
       icon: Download,
       label: "Receive",
       description: "Get paid easily",
-      onClick: () => {},
+      onClick: () => setReceiveDialogOpen(true),
       variant: "heroOutline" as const,
     },
     {
       icon: PiggyBank,
       label: "Save",
       description: "Earn rewards",
-      onClick: () => {},
+      onClick: () => setSaveDialogOpen(true),
       variant: "heroOutline" as const,
     },
     {
@@ -68,6 +72,8 @@ const QuickActions = () => {
       </Card>
 
       <SendMoneyDialog open={sendDialogOpen} onOpenChange={setSendDialogOpen} />
+      <ReceiveMoneyDialog open={receiveDialogOpen} onOpenChange={setReceiveDialogOpen} />
+      <AddToSavingsDialog open={saveDialogOpen} onOpenChange={setSaveDialogOpen} />
     </>
   );
 };

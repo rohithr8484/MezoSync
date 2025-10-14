@@ -13,8 +13,8 @@ const trustFeatures = [
   },
   {
     icon: Users,
-    title: "Trusted by Millions",
-    description: "Join thousands of users who've already made the switch to smarter, safer banking."
+    title: "Growing Community",
+    description: "Join a community making the switch to smarter, safer banking powered by Bitcoin."
   },
   {
     icon: TrendingUp,
