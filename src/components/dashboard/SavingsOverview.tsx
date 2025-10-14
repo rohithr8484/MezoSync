@@ -14,7 +14,7 @@ const SavingsOverview = () => {
 
   return (
     <div className="space-y-6">
-      <Card className="border-accent/30">
+      <Card className="border-accent/30 animate-fade-in hover-scale transition-all duration-300" style={{ animationDelay: '200ms' }}>
         <CardContent className="p-6 space-y-6">
           <div className="flex items-start justify-between">
             <div>
@@ -53,7 +53,7 @@ const SavingsOverview = () => {
 
       <AddToSavingsDialog open={addDialogOpen} onOpenChange={setAddDialogOpen} />
 
-      <Card>
+      <Card className="animate-fade-in" style={{ animationDelay: '350ms' }}>
         <CardContent className="p-6 space-y-4">
           <div className="flex items-center gap-2">
             <Target className="w-5 h-5 text-accent" />

@@ -17,34 +17,34 @@ const Hero = () => {
       
       <div className="container mx-auto px-4 py-20 relative z-10">
         <div className="max-w-4xl mx-auto text-center space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 backdrop-blur-sm mb-4">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 backdrop-blur-sm mb-4 animate-fade-in">
             <Shield className="w-4 h-4 text-accent" />
             <span className="text-sm font-medium text-accent">Bitcoin-Backed Financial Freedom</span>
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground leading-tight">
+          <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground leading-tight animate-fade-in" style={{ animationDelay: '150ms' }}>
             Your Money, Simplified.
             <span className="bg-gradient-to-r from-accent to-orange-500 bg-clip-text text-transparent"> Powered by Bitcoin</span>
           </h1>
 
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed animate-fade-in" style={{ animationDelay: '300ms' }}>
             Send, save, and manage your money like any banking app. No crypto knowledge needed. Just simple, secure financial freedom.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-fade-in" style={{ animationDelay: '450ms' }}>
             <Link to="/wallet">
-              <Button variant="hero" size="xl" className="group">
+              <Button variant="hero" size="xl" className="group hover-scale">
                 Get Started
                 <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
               </Button>
             </Link>
-            <Button variant="heroOutline" size="xl">
+            <Button variant="heroOutline" size="xl" className="hover-scale">
               <Zap className="w-5 h-5" />
               Learn More
             </Button>
           </div>
 
-          <div className="grid grid-cols-3 gap-8 pt-12 max-w-2xl mx-auto">
+          <div className="grid grid-cols-3 gap-8 pt-12 max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '600ms' }}>
             <div className="text-center space-y-1">
               <div className="text-3xl font-bold text-accent">Instant</div>
               <div className="text-sm text-muted-foreground">Transfers</div>

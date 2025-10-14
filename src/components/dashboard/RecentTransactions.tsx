@@ -59,7 +59,7 @@ const transactions = [
 
 const RecentTransactions = () => {
   return (
-    <Card>
+    <Card className="animate-fade-in" style={{ animationDelay: '300ms' }}>
       <CardContent className="p-6">
         <div className="flex items-center justify-between mb-6">
           <h3 className="text-lg font-semibold">Recent Activity</h3>

@@ -12,7 +12,7 @@ const AccountBalance = () => {
   const changePercent = "+2.4%";
 
   return (
-    <Card className="bg-gradient-to-br from-primary to-purple-950 border-0 shadow-[var(--shadow-lg)] overflow-hidden relative">
+    <Card className="bg-gradient-to-br from-primary to-purple-950 border-0 shadow-[var(--shadow-lg)] overflow-hidden relative animate-fade-in hover-scale transition-all duration-300">
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-accent/20 via-transparent to-transparent" />
       
       <CardContent className="p-8 relative z-10">
