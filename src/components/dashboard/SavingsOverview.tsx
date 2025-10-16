@@ -22,8 +22,7 @@ const SavingsOverview = () => {
                 <PiggyBank className="w-5 h-5 text-accent" />
                 <h3 className="font-semibold">Savings Account</h3>
               </div>
-              <p className="text-3xl font-bold text-foreground">${savingsBalance}</p>
-              <p className="text-sm text-muted-foreground mt-1">MUSD Balance</p>
+              <p className="text-3xl font-bold text-foreground">${savingsBalance} <span className="text-base text-muted-foreground font-normal">MUSD Balance</span></p>
             </div>
             
             <div className="text-right">
