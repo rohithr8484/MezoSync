@@ -6,7 +6,7 @@ import { mainnet, sepolia } from 'wagmi/chains';
 const projectId = '696956c426d467cb2aed00d4b0a543b2';
 
 export const config = getDefaultConfig({
-  appName: 'BitBank',
+  appName: 'Mezo Sync',
   projectId,
   chains: [mainnet, sepolia],
   transports: {

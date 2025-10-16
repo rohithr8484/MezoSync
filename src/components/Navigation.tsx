@@ -14,7 +14,7 @@ const Navigation = () => {
             <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-accent to-orange-600 flex items-center justify-center">
               <Bitcoin className="w-6 h-6 text-white" />
             </div>
-            <span className="text-xl font-bold text-foreground">BitBank</span>
+            <span className="text-xl font-bold text-foreground">Mezo Sync</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-8">

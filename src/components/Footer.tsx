@@ -12,7 +12,7 @@ const Footer = () => {
               <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-accent to-orange-600 flex items-center justify-center">
                 <Bitcoin className="w-5 h-5 text-white" />
               </div>
-              <span className="text-lg font-bold text-foreground">BitBank</span>
+              <span className="text-lg font-bold text-foreground">Mezo Sync</span>
             </div>
             <p className="text-sm text-muted-foreground">
               Simple, secure Bitcoin-backed financial services for everyone.
@@ -23,7 +23,7 @@ const Footer = () => {
         <div className="pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row justify-between items-center gap-4">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} BitBank. All rights reserved.
+              © {currentYear} Mezo Sync. All rights reserved.
             </p>
             <div className="flex gap-6">
               <a href="#" className="text-sm text-muted-foreground hover:text-accent transition-colors">Twitter</a>
