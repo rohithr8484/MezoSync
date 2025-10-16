@@ -7,26 +7,26 @@ const CTA = () => {
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/10 via-transparent to-transparent" />
       
       <div className="container mx-auto max-w-4xl relative z-10">
-        <div className="text-center space-y-8 animate-fade-in">
+        <div className="text-center space-y-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/40 backdrop-blur-sm">
             <Sparkles className="w-4 h-4 text-accent" />
             <span className="text-sm font-medium text-accent">Start Your Journey Today</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground leading-tight animate-fade-in" style={{ animationDelay: '150ms' }}>
+          <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground leading-tight">
             Ready to Take Control of Your Financial Future?
           </h2>
 
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: '300ms' }}>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
             Join thousands who've already discovered the freedom of Bitcoin-backed banking. No credit checks, no waiting periods, no complexity.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-fade-in" style={{ animationDelay: '450ms' }}>
-            <Button variant="hero" size="xl" className="group hover-scale">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
+            <Button variant="hero" size="xl" className="group">
               Open Your Account
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="heroOutline" size="xl" className="hover-scale">
+            <Button variant="heroOutline" size="xl">
               Talk to an Expert
             </Button>
           </div>

@@ -19,8 +19,8 @@ const services = [
   {
     icon: remittanceIcon,
     title: "International",
-    description: "Send money across borders instantly with transparent, low fees and real-time tracking.",
-    features: ["Global transfers", "Real-time tracking", "Lower than banks"]
+    description: "Send money across borders without the high fees. Best exchange rates, guaranteed.",
+    features: ["190+ countries", "Real-time tracking", "Lower than banks"]
   }
 ];
 
@@ -28,7 +28,7 @@ const Services = () => {
   return (
     <section id="services" className="py-24 px-4 bg-secondary/30">
       <div className="container mx-auto">
-        <div className="text-center mb-16 space-y-4 animate-fade-in">
+        <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
             Simple Financial Services
           </h2>
@@ -41,8 +41,7 @@ const Services = () => {
           {services.map((service, index) => (
             <Card 
               key={index} 
-              className="group hover:shadow-[var(--shadow-lg)] transition-all duration-500 hover:-translate-y-2 border-border/50 bg-card animate-fade-in hover-scale"
-              style={{ animationDelay: `${index * 150}ms` }}
+              className="group hover:shadow-[var(--shadow-lg)] transition-all duration-300 hover:-translate-y-2 border-border/50 bg-card"
             >
               <CardContent className="p-8 space-y-6">
                 <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">

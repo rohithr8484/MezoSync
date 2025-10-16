@@ -27,7 +27,7 @@ const Trust = () => {
   return (
     <section id="security" className="py-24 px-4 bg-background">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-16 space-y-4 animate-fade-in">
+        <div className="text-center mb-16 space-y-4">
           <h2 className="text-4xl md:text-5xl font-bold text-foreground">
             Built on Trust & Security
           </h2>
@@ -42,8 +42,7 @@ const Trust = () => {
             return (
               <div 
                 key={index}
-                className="flex gap-6 p-8 rounded-2xl border border-border/50 bg-card hover:border-accent/50 transition-all duration-500 hover:shadow-[var(--shadow-lg)] group animate-fade-in hover-scale"
-                style={{ animationDelay: `${index * 100}ms` }}
+                className="flex gap-6 p-8 rounded-2xl border border-border/50 bg-card hover:border-accent/50 transition-all duration-300 hover:shadow-[var(--shadow-lg)] group"
               >
                 <div className="flex-shrink-0">
                   <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">

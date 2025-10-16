@@ -37,7 +37,7 @@ const QuickActions = () => {
 
   return (
     <>
-      <Card className="animate-fade-in" style={{ animationDelay: '150ms' }}>
+      <Card>
         <CardContent className="p-6">
           <h3 className="text-lg font-semibold mb-4">Quick Actions</h3>
           <div className="grid grid-cols-3 gap-4">
