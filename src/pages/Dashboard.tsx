@@ -8,9 +8,15 @@ import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Wallet } from "lucide-react";
+import { useState } from "react";
 
 const Dashboard = () => {
   const { isConnected } = useAccount();
+  const [savingsBalance, setSavingsBalance] = useState(1850.00);
+
+  const handleSavingsAdded = (amount: number) => {
+    setSavingsBalance(prev => prev + amount);
+  };
 
   if (!isConnected) {
     return (
@@ -53,12 +59,18 @@ const Dashboard = () => {
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
               <AccountBalance />
-              <QuickActions />
+              <QuickActions 
+                currentSavings={savingsBalance}
+                onSavingsAdded={handleSavingsAdded}
+              />
               <RecentTransactions />
             </div>
             
             <div className="space-y-6">
-              <SavingsOverview />
+              <SavingsOverview 
+                savingsBalance={savingsBalance}
+                onSavingsAdded={handleSavingsAdded}
+              />
             </div>
           </div>
         </div>

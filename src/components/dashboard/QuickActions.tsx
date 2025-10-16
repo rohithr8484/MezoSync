@@ -6,7 +6,7 @@ import SendMoneyDialog from "./SendMoneyDialog";
 import ReceiveMoneyDialog from "./ReceiveMoneyDialog";
 import AddToSavingsDialog from "./AddToSavingsDialog";
 
-const QuickActions = () => {
+const QuickActions = ({ currentSavings, onSavingsAdded }: { currentSavings: number; onSavingsAdded: (amount: number) => void }) => {
   const [sendDialogOpen, setSendDialogOpen] = useState(false);
   const [receiveDialogOpen, setReceiveDialogOpen] = useState(false);
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
@@ -66,7 +66,12 @@ const QuickActions = () => {
 
       <SendMoneyDialog open={sendDialogOpen} onOpenChange={setSendDialogOpen} />
       <ReceiveMoneyDialog open={receiveDialogOpen} onOpenChange={setReceiveDialogOpen} />
-      <AddToSavingsDialog open={saveDialogOpen} onOpenChange={setSaveDialogOpen} />
+      <AddToSavingsDialog 
+        open={saveDialogOpen} 
+        onOpenChange={setSaveDialogOpen}
+        currentSavings={currentSavings}
+        onSavingsAdded={onSavingsAdded}
+      />
     </>
   );
 };

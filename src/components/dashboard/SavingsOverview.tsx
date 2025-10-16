@@ -5,11 +5,10 @@ import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
 import AddToSavingsDialog from "./AddToSavingsDialog";
 
-const SavingsOverview = () => {
+const SavingsOverview = ({ savingsBalance, onSavingsAdded }: { savingsBalance: number; onSavingsAdded: (amount: number) => void }) => {
   const [addDialogOpen, setAddDialogOpen] = useState(false);
-  const savingsBalance = "1,850.00";
-  const savingsGoal = "5,000.00";
-  const progress = (1850 / 5000) * 100;
+  const savingsGoal = 5000.00;
+  const progress = (savingsBalance / savingsGoal) * 100;
   const apy = "4.5%";
 
   return (
@@ -22,7 +21,7 @@ const SavingsOverview = () => {
                 <PiggyBank className="w-5 h-5 text-accent" />
                 <h3 className="font-semibold">Savings Account</h3>
               </div>
-              <p className="text-3xl font-bold text-foreground">${savingsBalance} <span className="text-base text-muted-foreground font-normal">MUSD Balance</span></p>
+              <p className="text-3xl font-bold text-foreground">${savingsBalance.toFixed(2)} <span className="text-base text-muted-foreground font-normal">MUSD Balance</span></p>
             </div>
             
             <div className="text-right">
@@ -36,7 +35,7 @@ const SavingsOverview = () => {
           <div className="space-y-3 pt-4 border-t">
             <div className="flex items-center justify-between text-sm">
               <span className="text-muted-foreground">Savings Goal</span>
-              <span className="font-medium">${savingsGoal}</span>
+              <span className="font-medium">${savingsGoal.toFixed(2)}</span>
             </div>
             <Progress value={progress} className="h-2" />
             <p className="text-xs text-muted-foreground">
@@ -50,7 +49,12 @@ const SavingsOverview = () => {
         </CardContent>
       </Card>
 
-      <AddToSavingsDialog open={addDialogOpen} onOpenChange={setAddDialogOpen} />
+      <AddToSavingsDialog 
+        open={addDialogOpen} 
+        onOpenChange={setAddDialogOpen}
+        currentSavings={savingsBalance}
+        onSavingsAdded={onSavingsAdded}
+      />
 
       <Card>
         <CardContent className="p-6 space-y-4">

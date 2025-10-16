@@ -8,14 +8,15 @@ import { toast } from "sonner";
 interface AddToSavingsDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  currentSavings: number;
+  onSavingsAdded: (amount: number) => void;
 }
 
-const AddToSavingsDialog = ({ open, onOpenChange }: AddToSavingsDialogProps) => {
+const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded }: AddToSavingsDialogProps) => {
   const [amount, setAmount] = useState("");
   
   // Mock data - in production, fetch from blockchain
   const mainBalance = 5234.50;
-  const currentSavings = 1850.00;
   const apy = 4.5;
 
   const amountNum = parseFloat(amount) || 0;
@@ -34,6 +35,7 @@ const AddToSavingsDialog = ({ open, onOpenChange }: AddToSavingsDialogProps) => 
     }
     
     // In production: execute blockchain transaction here
+    onSavingsAdded(amountNum);
     toast.success(`Successfully added ${amountNum.toFixed(2)} MUSD to savings`, {
       description: `Your savings balance is now $${newSavingsBalance.toFixed(2)} MUSD`
     });
