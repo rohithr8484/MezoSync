@@ -8,14 +8,76 @@ import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Wallet } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 const Dashboard = () => {
-  const { isConnected } = useAccount();
-  const [savingsBalance, setSavingsBalance] = useState(1850.00);
+  const { isConnected, address } = useAccount();
+  const [savingsBalance, setSavingsBalance] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const handleSavingsAdded = (amount: number) => {
-    setSavingsBalance(prev => prev + amount);
+  // Fetch savings balance from database when wallet is connected
+  useEffect(() => {
+    const fetchSavingsBalance = async () => {
+      if (!address) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const { data, error } = await supabase
+          .from('user_balances')
+          .select('savings_balance')
+          .eq('wallet_address', address.toLowerCase())
+          .maybeSingle();
+
+        if (error) throw error;
+
+        if (data) {
+          setSavingsBalance(Number(data.savings_balance));
+        } else {
+          // Create initial balance record
+          const { error: insertError } = await supabase
+            .from('user_balances')
+            .insert({ 
+              wallet_address: address.toLowerCase(), 
+              savings_balance: 0 
+            });
+
+          if (insertError) throw insertError;
+          setSavingsBalance(0);
+        }
+      } catch (error) {
+        console.error('Error fetching savings balance:', error);
+        toast.error('Failed to load savings balance');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchSavingsBalance();
+  }, [address]);
+
+  const handleSavingsAdded = async (amount: number) => {
+    if (!address) return;
+
+    const newBalance = savingsBalance + amount;
+    setSavingsBalance(newBalance);
+
+    try {
+      const { error } = await supabase
+        .from('user_balances')
+        .update({ savings_balance: newBalance })
+        .eq('wallet_address', address.toLowerCase());
+
+      if (error) throw error;
+    } catch (error) {
+      console.error('Error updating savings balance:', error);
+      toast.error('Failed to save balance');
+      // Revert on error
+      setSavingsBalance(savingsBalance);
+    }
   };
 
   if (!isConnected) {
