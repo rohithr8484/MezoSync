@@ -48,17 +48,10 @@ Send money across borders without the high fees. Best exchange rates, guaranteed
 - **Recharts** - Data visualization
 - **Embla Carousel** - Smooth carousel components
 
-## 📁 Dashboard Components
+## Components
 
-```
-src/components/dashboard/
-├── AccountBalance.tsx
-├── AddToSavingsDialog.tsx
-├── QuickActions.tsx
-├── ReceiveMoneyDialog.tsx
-├── RecentTransactions.tsx
-└── SavingsOverview.tsx
-```
+<img width="466" height="818" alt="image" src="https://github.com/user-attachments/assets/af9cdfc5-f303-4bcc-9523-88f75854618e" />
+
 
 ## 🚀 Quick Start
 
