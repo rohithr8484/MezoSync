@@ -1,73 +1,130 @@
-# Welcome to your Lovable project
+# Simple Financial Services
 
-## Project info
+Everything you need to manage your money, without the complexity. Built on Mezo and MUSD for secure, efficient financial operations.
 
-**URL**: https://lovable.dev/projects/d1a58395-7f88-4203-bd53-eee27013a06f
+## 🚀 Features
 
-## How can I edit this code?
+### 💰 Smart Savings
+Put your money to work with high-yield savings accounts. Watch your balance grow automatically.
+- **4.5% Annual Return**
+- **Withdraw anytime**
+- **MUSD stablecoin**
 
-There are several ways of editing your application.
+### 📤 Send & Request
+Send money to anyone instantly. Split bills, pay friends, or send money home - all in seconds.
+- **Zero fees**
+- **Instant delivery**
+- **Request payments**
 
-**Use Lovable**
+### 🌍 International
+Send money across borders without the high fees. Best exchange rates, guaranteed.
+- **190+ countries**
+- **Real-time tracking**
+- **Lower than banks**
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/d1a58395-7f88-4203-bd53-eee27013a06f) and start prompting.
+## 🛠 Tech Stack
 
-Changes made via Lovable will be committed automatically to this repo.
+### Frontend
+- **React 18** - Modern UI library
+- **TypeScript** - Type-safe development
+- **Tailwind CSS** - Utility-first styling
+- **Radix UI** - Accessible component primitives
 
-**Use your preferred IDE**
+### Blockchain Integration
+- **@mezo-org/passport** - Bitcoin wallet connectivity
+- **RainbowKit** - Wallet management
+- **Sats Connect** - Bitcoin transaction handling
+- **Wagmi + Viem** - Blockchain interaction
+- **MUSD Integration** - Stablecoin operations
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+### State Management & Forms
+- **React Query** - Server state management
+- **Zod** - Schema validation
+- **React Hook Form** - Form handling
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+### UI Components
+- **Lucide Icons** - Beautiful iconography
+- **Sonner** - Toast notifications
+- **Recharts** - Data visualization
+- **Embla Carousel** - Smooth carousel components
 
-Follow these steps:
+## 📁 Dashboard Components
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```
+src/components/dashboard/
+├── AccountBalance.tsx
+├── AddToSavingsDialog.tsx
+├── QuickActions.tsx
+├── ReceiveMoneyDialog.tsx
+├── RecentTransactions.tsx
+└── SavingsOverview.tsx
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+## 🚀 Quick Start
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Installation
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+# Clone the repository
+git clone https://github.com/your-username/simple-financial-services.git
+cd simple-financial-services
+
+# Install dependencies
+npm install
+
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Open your browser at `http://localhost:5173`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 🔧 Development
 
-**Use GitHub Codespaces**
+### Available Scripts
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```bash
+# Development server
+npm run dev
 
-## What technologies are used for this project?
+# Production build
+npm run build
 
-This project is built with:
+# Development build
+npm run build:dev
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+# Preview production build
+npm run preview
 
-## How can I deploy this project?
+# Linting
+npm run lint
+```
 
-Simply open [Lovable](https://lovable.dev/projects/d1a58395-7f88-4203-bd53-eee27013a06f) and click on Share -> Publish.
+## Usage
 
-## Can I connect a custom domain to my Lovable project?
+## 🛡 Built on Trust & Security
 
-Yes, you can!
+Our platform leverages the security and efficiency of:
+- **Mezo Network** - For fast, low-cost transactions
+- **MUSD Stablecoin** - For price stability and reliability
+- **Bitcoin Security** - Through integrated wallet support
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+## 💡 Core Principles
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+- **Simplicity** - Manage your money without complexity
+- **Accessibility** - Financial services for everyone
+- **Transparency** - Clear fees and operations
+- **Security** - Built on proven blockchain technology
+
+## 🤝 Contributing
+
+We welcome contributions! Please feel free to submit pull requests or open issues to help improve Simple Financial Services.
+
+## 📄 License
+
+This project is proprietary. Please contact the maintainers for access and usage information.
+
+---
+
+**Simple Financial Services** - Modern banking, simplified. Built on Mezo and MUSD. 🚀
+
+*Making financial services accessible to everyone through blockchain technology*
