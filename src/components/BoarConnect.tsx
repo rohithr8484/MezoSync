@@ -18,25 +18,58 @@ const BoarConnect = () => {
     setIsConnecting(true);
     
     try {
-      // Note: This is a placeholder implementation
-      // You'll need to integrate the actual Boar wallet SDK/API
-      // based on their documentation
+      // Check if window.ethereum is available
+      if (!window.ethereum) {
+        throw new Error("No wallet detected. Please install a Web3 wallet.");
+      }
       
-      // Simulated connection for now
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Request account access
+      const accounts = await window.ethereum.request({
+        method: 'eth_requestAccounts'
+      });
       
-      // Mock wallet address
-      const mockAddress = "0x" + "1234567890abcdef".repeat(2.5);
-      setWalletAddress(mockAddress);
+      if (!accounts || accounts.length === 0) {
+        throw new Error("No accounts found");
+      }
+      
+      // Switch to Boar Network using the RPC endpoint
+      try {
+        await window.ethereum.request({
+          method: 'wallet_addEthereumChain',
+          params: [{
+            chainId: '0x1F3E', // Mezo Mainnet chain ID (7998 in decimal)
+            chainName: 'Mezo Network via Boar',
+            nativeCurrency: {
+              name: 'BTC',
+              symbol: 'BTC',
+              decimals: 18
+            },
+            rpcUrls: [BOAR_RPC_HTTP],
+            blockExplorerUrls: ['https://explorer.mezo.org']
+          }]
+        });
+      } catch (addError: any) {
+        // If chain already exists, try to switch to it
+        if (addError.code === 4902) {
+          await window.ethereum.request({
+            method: 'wallet_switchEthereumChain',
+            params: [{ chainId: '0x1F3E' }]
+          });
+        } else {
+          throw addError;
+        }
+      }
+      
+      setWalletAddress(accounts[0]);
       setIsConnected(true);
       
-      toast.success("Connected to Boar Wallet", {
-        description: "Your wallet has been successfully connected"
+      toast.success("Connected to Boar Network", {
+        description: `Connected via ${BOAR_RPC_HTTP}`
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("Boar connection error:", error);
       toast.error("Connection Failed", {
-        description: "Unable to connect to Boar wallet. Please try again."
+        description: error.message || "Unable to connect to Boar wallet. Please try again."
       });
     } finally {
       setIsConnecting(false);
