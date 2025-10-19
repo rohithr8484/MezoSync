@@ -7,19 +7,19 @@ const services = [
   {
     icon: savingsIcon,
     title: "Smart Savings",
-    description: "Put your money to work with high-yield savings accounts. Watch your balance grow automatically.",
+    description: "Put your MUSD to work with high-yield savings accounts. Watch your balance grow automatically.",
     features: ["4.5% Annual Return", "Withdraw anytime", "MUSD stablecoin"]
   },
   {
     icon: paymentsIcon,
     title: "Send & Request",
-    description: "Send money to anyone instantly. Split bills, pay friends, or send money home - all in seconds.",
+    description: "Send MUSD to anyone instantly. Split bills, pay friends, or send MUSD home - all in seconds.",
     features: ["Zero fees", "Instant delivery", "Request payments"]
   },
   {
     icon: remittanceIcon,
     title: "International",
-    description: "Send money across borders without the high fees. Best exchange rates, guaranteed.",
+    description: "Send MUSD across borders without the high fees. Best exchange rates, guaranteed.",
     features: ["190+ countries", "Real-time tracking", "Lower than banks"]
   }
 ];
@@ -33,7 +33,7 @@ const Services = () => {
             Simple Financial Services
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            Everything you need to manage your money, without the complexity
+            Everything you need to manage your MUSD, without the complexity
           </p>
         </div>
 

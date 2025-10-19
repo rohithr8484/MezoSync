@@ -49,7 +49,7 @@ const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded
         <DialogHeader>
           <DialogTitle>Add to Savings</DialogTitle>
           <DialogDescription>
-            Transfer money from your main balance to your savings account
+            Transfer MUSD from your main balance to your savings account
           </DialogDescription>
         </DialogHeader>
 

@@ -28,7 +28,7 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
     // Simulate transaction
     await new Promise(resolve => setTimeout(resolve, 2000));
     
-    toast.success("Money sent successfully!", {
+    toast.success("MUSD sent successfully!", {
       description: `Sent $${amount} MUSD to ${recipient}`
     });
     
@@ -45,7 +45,7 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Send className="w-5 h-5 text-accent" />
-            Send Money
+            Send MUSD
           </DialogTitle>
           <DialogDescription>
             Send MUSD instantly to anyone, anywhere
@@ -105,7 +105,7 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
             size="lg"
             className="w-full"
           >
-            {isSending ? "Sending..." : "Send Money"}
+            {isSending ? "Sending..." : "Send MUSD"}
           </Button>
         </div>
       </DialogContent>

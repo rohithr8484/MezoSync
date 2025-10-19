@@ -22,7 +22,7 @@ const ReceiveMoneyDialog = ({ open, onOpenChange }: ReceiveMoneyDialogProps) => 
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Receive Money</DialogTitle>
+          <DialogTitle>Receive MUSD</DialogTitle>
           <DialogDescription>
             Share your address to receive MUSD payments
           </DialogDescription>

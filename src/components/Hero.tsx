@@ -23,12 +23,12 @@ const Hero = () => {
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground leading-tight animate-fade-up">
-            Your Money, Simplified.
+            Your MUSD, Simplified.
             <span className="bg-gradient-to-r from-accent to-orange-500 bg-clip-text text-transparent"> Powered by Bitcoin</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed animate-fade-up [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
-            Send, save, and manage your money like any banking app. No crypto knowledge needed. Just simple, secure financial freedom.
+            Send, save, and manage your MUSD like any banking app. No crypto knowledge needed. Just simple, secure financial freedom.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-fade-up [animation-delay:400ms] opacity-0 [animation-fill-mode:forwards]">

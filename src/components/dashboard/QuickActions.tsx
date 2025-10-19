@@ -14,7 +14,7 @@ const QuickActions = ({ currentSavings, onSavingsAdded }: { currentSavings: numb
   const actions = [
     {
       icon: Send,
-      label: "Send Money",
+      label: "Send MUSD",
       description: "To anyone, instantly",
       onClick: () => setSendDialogOpen(true),
       variant: "hero" as const,

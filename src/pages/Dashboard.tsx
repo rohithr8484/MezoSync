@@ -92,7 +92,7 @@ const Dashboard = () => {
             </div>
             <h1 className="text-3xl font-bold">Connect Your Account</h1>
             <p className="text-muted-foreground">
-              Please connect your wallet to access your dashboard and start managing your money.
+              Please connect your wallet to access your dashboard and start managing your MUSD.
             </p>
             <Link to="/wallet">
               <Button variant="hero" size="xl" className="mt-4">
@@ -115,7 +115,7 @@ const Dashboard = () => {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-              <p className="text-muted-foreground">Manage your money, simplified</p>
+              <p className="text-muted-foreground">Manage your MUSD, simplified</p>
             </div>
           </div>
 
