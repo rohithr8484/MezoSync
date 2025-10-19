@@ -37,7 +37,7 @@ const BoarConnect = () => {
         await window.ethereum.request({
           method: 'wallet_addEthereumChain',
           params: [{
-            chainId: '0x1F3E', // Mezo Mainnet chain ID (7998 in decimal)
+            chainId: '0x7B7C', // Mezo Mainnet chain ID (31612 in decimal)
             chainName: 'Mezo Network via Boar',
             nativeCurrency: {
               name: 'BTC',
@@ -53,7 +53,7 @@ const BoarConnect = () => {
         if (addError.code === 4902) {
           await window.ethereum.request({
             method: 'wallet_switchEthereumChain',
-            params: [{ chainId: '0x1F3E' }]
+            params: [{ chainId: '0x7B7C' }]
           });
         } else {
           throw addError;
