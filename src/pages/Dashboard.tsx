@@ -4,6 +4,7 @@ import AccountBalance from "@/components/dashboard/AccountBalance";
 import QuickActions from "@/components/dashboard/QuickActions";
 import RecentTransactions from "@/components/dashboard/RecentTransactions";
 import SavingsOverview from "@/components/dashboard/SavingsOverview";
+import PythPriceFeed from "@/components/dashboard/PythPriceFeed";
 import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -121,6 +122,7 @@ const Dashboard = () => {
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
               <AccountBalance />
+              <PythPriceFeed />
               <QuickActions 
                 currentSavings={savingsBalance}
                 onSavingsAdded={handleSavingsAdded}
