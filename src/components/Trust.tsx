@@ -42,18 +42,23 @@ const Trust = () => {
             return (
               <div 
                 key={index}
-                className="flex gap-6 p-8 rounded-2xl border border-border/50 bg-card hover:border-accent/50 transition-all duration-300 hover:shadow-[var(--shadow-lg)] group"
+                className="flex gap-6 p-8 rounded-2xl border border-border/50 bg-card hover:border-accent/50 transition-all duration-500 hover:shadow-[var(--shadow-xl)] group hover:-translate-y-1 animate-fade-up"
+                style={{
+                  animationDelay: `${index * 100}ms`,
+                  opacity: 0,
+                  animationFillMode: 'forwards'
+                }}
               >
                 <div className="flex-shrink-0">
-                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-7 h-7 text-accent" />
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 group-hover:shadow-[var(--shadow-accent)]">
+                    <Icon className="w-7 h-7 text-accent group-hover:animate-pulse" />
                   </div>
                 </div>
                 <div className="space-y-2">
-                  <h3 className="text-xl font-bold text-card-foreground">
+                  <h3 className="text-xl font-bold text-card-foreground group-hover:text-accent transition-colors duration-300">
                     {feature.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-300">
                     {feature.description}
                   </p>
                 </div>

@@ -8,30 +8,30 @@ const CTA = () => {
       
       <div className="container mx-auto max-w-4xl relative z-10">
         <div className="text-center space-y-8">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/40 backdrop-blur-sm">
-            <Sparkles className="w-4 h-4 text-accent" />
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/20 border border-accent/40 backdrop-blur-sm animate-scale-in">
+            <Sparkles className="w-4 h-4 text-accent animate-pulse" />
             <span className="text-sm font-medium text-accent">Start Your Journey Today</span>
           </div>
 
-          <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground leading-tight">
+          <h2 className="text-4xl md:text-5xl font-bold text-primary-foreground leading-tight animate-fade-up">
             Ready to Take Control of Your Financial Future?
           </h2>
 
-          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto animate-fade-up [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">
             Join thousands who've already discovered the freedom of Bitcoin-backed banking. No credit checks, no waiting periods, no complexity.
           </p>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <Button variant="hero" size="xl" className="group">
+          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4 animate-fade-up [animation-delay:400ms] opacity-0 [animation-fill-mode:forwards]">
+            <Button variant="hero" size="xl" className="group animate-glow">
               Open Your Account
               <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
             </Button>
-            <Button variant="heroOutline" size="xl">
+            <Button variant="heroOutline" size="xl" className="hover:scale-105 transition-transform duration-300">
               Talk to an Expert
             </Button>
           </div>
 
-          <div className="pt-8 text-sm text-muted-foreground">
+          <div className="pt-8 text-sm text-muted-foreground animate-fade-in [animation-delay:600ms] opacity-0 [animation-fill-mode:forwards]">
             Account setup takes less than 3 minutes • No minimum deposit required
           </div>
         </div>
