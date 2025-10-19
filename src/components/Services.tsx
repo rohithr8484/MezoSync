@@ -20,7 +20,7 @@ const services = [
     icon: remittanceIcon,
     title: "International",
     description: "Send MUSD across borders without the high fees. Best exchange rates, guaranteed.",
-    features: ["190+ countries", "Real-time tracking", "Lower than banks"]
+    features: ["Real-time tracking", "Lower than banks"]
   }
 ];
 
