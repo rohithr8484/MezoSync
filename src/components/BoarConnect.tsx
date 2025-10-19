@@ -4,8 +4,10 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Wallet, AlertCircle } from "lucide-react";
 import { toast } from "sonner";
 
-// Boar API Key
+// Boar API Key and RPC Endpoints
 const BOAR_API_KEY = "81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c";
+const BOAR_RPC_HTTP = "https://rpc-http.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c";
+const BOAR_RPC_WSS = "wss://rpc-ws.mezo.boar.network/81YcmV8cjuhVuCdoidBcGlWIC0rSfy4c";
 
 const BoarConnect = () => {
   const [isConnecting, setIsConnecting] = useState(false);
