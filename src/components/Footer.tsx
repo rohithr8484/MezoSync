@@ -15,7 +15,7 @@ const Footer = () => {
               <span className="text-lg font-bold text-foreground">Mezo Sync</span>
             </div>
             <p className="text-sm text-muted-foreground">
-              Simple, secure Bitcoin-backed MUSD financial services for everyone.
+              Simple, secure Mezo Network-backed MUSD financial services for everyone.
             </p>
           </div>
         </div>

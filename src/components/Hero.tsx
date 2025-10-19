@@ -19,12 +19,12 @@ const Hero = () => {
         <div className="max-w-4xl mx-auto text-center space-y-8">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/30 backdrop-blur-sm mb-4 animate-fade-in">
             <Shield className="w-4 h-4 text-accent" />
-            <span className="text-sm font-medium text-accent">Bitcoin-Backed Financial Freedom</span>
+            <span className="text-sm font-medium text-accent">Mezo Network-Backed Financial Freedom</span>
           </div>
 
           <h1 className="text-5xl md:text-7xl font-bold text-primary-foreground leading-tight animate-fade-up">
             Your MUSD, Simplified.
-            <span className="bg-gradient-to-r from-accent to-orange-500 bg-clip-text text-transparent"> Powered by Bitcoin</span>
+            <span className="bg-gradient-to-r from-accent to-orange-500 bg-clip-text text-transparent"> Powered by Mezo Network</span>
           </h1>
 
           <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto leading-relaxed animate-fade-up [animation-delay:200ms] opacity-0 [animation-fill-mode:forwards]">

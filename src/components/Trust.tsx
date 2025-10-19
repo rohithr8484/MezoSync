@@ -14,7 +14,7 @@ const trustFeatures = [
   {
     icon: Users,
     title: "Growing Community",
-    description: "Join a community making the switch to smarter, safer banking powered by Bitcoin."
+    description: "Join a community making the switch to smarter, safer banking powered by Mezo Network."
   },
   {
     icon: TrendingUp,
