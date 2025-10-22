@@ -18,7 +18,6 @@ Send money to anyone instantly. Split bills, pay friends, or send money home - a
 
 ### 🌍 International
 Send money across borders without the high fees. Best exchange rates, guaranteed.
-- **190+ countries**
 - **Real-time tracking**
 - **Lower than banks**
 
