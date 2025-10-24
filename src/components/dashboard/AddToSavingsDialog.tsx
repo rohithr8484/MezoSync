@@ -4,6 +4,8 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useAccount } from "wagmi";
+import { supabase } from "@/integrations/supabase/client";
 
 interface AddToSavingsDialogProps {
   open: boolean;
@@ -13,7 +15,9 @@ interface AddToSavingsDialogProps {
 }
 
 const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded }: AddToSavingsDialogProps) => {
+  const { address } = useAccount();
   const [amount, setAmount] = useState("");
+  const [isAdding, setIsAdding] = useState(false);
   
   // Mock data - in production, fetch from blockchain
   const mainBalance = 5234.50;
@@ -23,7 +27,7 @@ const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded
   const newMainBalance = mainBalance - amountNum;
   const newSavingsBalance = currentSavings + amountNum;
 
-  const handleAddToSavings = () => {
+  const handleAddToSavings = async () => {
     if (!amount || amountNum <= 0) {
       toast.error("Please enter a valid amount");
       return;
@@ -33,14 +37,39 @@ const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded
       toast.error("Insufficient balance in main account");
       return;
     }
+
+    if (!address) {
+      toast.error("Wallet not connected");
+      return;
+    }
     
-    // In production: execute blockchain transaction here
-    onSavingsAdded(amountNum);
-    toast.success(`Successfully added ${amountNum.toFixed(2)} MUSD to savings`, {
-      description: `Your savings balance is now $${newSavingsBalance.toFixed(2)} MUSD`
-    });
-    setAmount("");
-    onOpenChange(false);
+    setIsAdding(true);
+
+    try {
+      // Record transaction in database
+      const { error } = await supabase
+        .from('transactions')
+        .insert({
+          wallet_address: address.toLowerCase(),
+          transaction_type: 'save',
+          amount: amountNum,
+          note: 'Added to savings'
+        });
+
+      if (error) throw error;
+
+      onSavingsAdded(amountNum);
+      toast.success(`Successfully added ${amountNum.toFixed(2)} MUSD to savings`, {
+        description: `Your savings balance is now $${newSavingsBalance.toFixed(2)} MUSD`
+      });
+      setAmount("");
+      onOpenChange(false);
+    } catch (error) {
+      console.error('Error adding to savings:', error);
+      toast.error("Failed to add to savings");
+    } finally {
+      setIsAdding(false);
+    }
   };
 
   return (
@@ -116,8 +145,13 @@ const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded
           <Button variant="outline" onClick={() => onOpenChange(false)} className="flex-1">
             Cancel
           </Button>
-          <Button variant="hero" onClick={handleAddToSavings} className="flex-1">
-            Add to Savings
+          <Button 
+            variant="hero" 
+            onClick={handleAddToSavings} 
+            disabled={isAdding}
+            className="flex-1"
+          >
+            {isAdding ? "Adding..." : "Add to Savings"}
           </Button>
         </div>
       </DialogContent>

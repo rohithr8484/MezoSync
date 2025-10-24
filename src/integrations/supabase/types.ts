@@ -14,6 +14,39 @@ export type Database = {
   }
   public: {
     Tables: {
+      transactions: {
+        Row: {
+          amount: number
+          created_at: string
+          id: string
+          note: string | null
+          recipient_address: string | null
+          sender_address: string | null
+          transaction_type: string
+          wallet_address: string
+        }
+        Insert: {
+          amount: number
+          created_at?: string
+          id?: string
+          note?: string | null
+          recipient_address?: string | null
+          sender_address?: string | null
+          transaction_type: string
+          wallet_address: string
+        }
+        Update: {
+          amount?: number
+          created_at?: string
+          id?: string
+          note?: string | null
+          recipient_address?: string | null
+          sender_address?: string | null
+          transaction_type?: string
+          wallet_address?: string
+        }
+        Relationships: []
+      }
       user_balances: {
         Row: {
           created_at: string

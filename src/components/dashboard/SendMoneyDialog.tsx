@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
+import { useAccount } from "wagmi";
+import { supabase } from "@/integrations/supabase/client";
 
 interface SendMoneyDialogProps {
   open: boolean;
@@ -12,31 +14,48 @@ interface SendMoneyDialogProps {
 }
 
 const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
+  const { address } = useAccount();
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
   const [isSending, setIsSending] = useState(false);
 
   const handleSend = async () => {
-    if (!recipient || !amount) {
+    if (!recipient || !amount || !address) {
       toast.error("Please fill in all required fields");
       return;
     }
 
     setIsSending(true);
     
-    // Simulate transaction
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    toast.success("MUSD sent successfully!", {
-      description: `Sent $${amount} MUSD to ${recipient}`
-    });
-    
-    setIsSending(false);
-    onOpenChange(false);
-    setRecipient("");
-    setAmount("");
-    setNote("");
+    try {
+      // Record transaction in database
+      const { error } = await supabase
+        .from('transactions')
+        .insert({
+          wallet_address: address.toLowerCase(),
+          transaction_type: 'send',
+          amount: parseFloat(amount),
+          recipient_address: recipient.toLowerCase(),
+          note: note || null
+        });
+
+      if (error) throw error;
+
+      toast.success("MUSD sent successfully!", {
+        description: `Sent $${amount} MUSD to ${recipient}`
+      });
+      
+      onOpenChange(false);
+      setRecipient("");
+      setAmount("");
+      setNote("");
+    } catch (error) {
+      console.error('Error sending MUSD:', error);
+      toast.error("Failed to send MUSD");
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
