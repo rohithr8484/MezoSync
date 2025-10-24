@@ -26,10 +26,14 @@ const services = [
 
 const Services = () => {
   return (
-    <section id="services" className="py-24 px-4 bg-secondary/30">
-      <div className="container mx-auto">
-        <div className="text-center mb-16 space-y-4">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+    <section id="services" className="py-24 px-4 bg-secondary/30 relative overflow-hidden">
+      <div className="absolute inset-0 bg-[image:var(--gradient-mesh)] opacity-30" />
+      <div className="absolute top-0 right-0 w-96 h-96 bg-accent/5 rounded-full blur-3xl animate-blob" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-blob [animation-delay:2s]" />
+      
+      <div className="container mx-auto relative z-10">
+        <div className="text-center mb-16 space-y-4 animate-fade-in">
+          <h2 className="text-4xl md:text-5xl font-bold bg-[image:var(--gradient-accent)] bg-clip-text text-transparent animate-gradient">
             Simple Financial Services
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -41,16 +45,17 @@ const Services = () => {
           {services.map((service, index) => (
             <Card 
               key={index} 
-              className="group hover:shadow-[var(--shadow-xl)] transition-all duration-500 hover:-translate-y-3 border-border/50 bg-card animate-fade-up hover:border-accent/30 relative overflow-hidden"
+              className="group hover:shadow-[var(--shadow-xl)] transition-all duration-500 hover:-translate-y-6 border-border/50 bg-card animate-fade-up hover:border-accent/50 relative overflow-hidden cursor-pointer perspective-1000"
               style={{
                 animationDelay: `${index * 150}ms`,
                 opacity: 0,
                 animationFillMode: 'forwards'
               }}
             >
-              <div className="absolute inset-0 bg-[image:var(--gradient-mesh)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <CardContent className="p-8 space-y-6 relative z-10">
-                <div className="w-20 h-20 mx-auto rounded-2xl bg-[image:var(--gradient-accent)] flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 group-hover:shadow-[var(--shadow-glow)]">
+              <div className="absolute inset-0 bg-[image:var(--gradient-mesh)] opacity-0 group-hover:opacity-100 transition-opacity duration-500 animate-gradient" />
+              <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <CardContent className="p-8 space-y-6 relative z-10 preserve-3d">
+                <div className="w-20 h-20 mx-auto rounded-2xl bg-[image:var(--gradient-accent)] flex items-center justify-center group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 group-hover:shadow-[var(--shadow-glow)] animate-gradient">
                   <img 
                     src={service.icon} 
                     alt={service.title}
@@ -59,18 +64,18 @@ const Services = () => {
                 </div>
 
                 <div className="space-y-3 text-center">
-                  <h3 className="text-2xl font-bold bg-[image:var(--gradient-accent)] bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
+                  <h3 className="text-2xl font-bold bg-[image:var(--gradient-accent)] bg-clip-text text-transparent group-hover:scale-110 transition-transform duration-500 animate-gradient">
                     {service.title}
                   </h3>
-                  <p className="text-muted-foreground leading-relaxed">
+                  <p className="text-muted-foreground leading-relaxed group-hover:text-foreground transition-colors duration-500">
                     {service.description}
                   </p>
                 </div>
 
                 <ul className="space-y-2">
                   {service.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-                      <div className="w-1.5 h-1.5 rounded-full bg-accent group-hover:scale-[2] group-hover:shadow-[var(--shadow-glow)] transition-all duration-300" />
+                    <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-foreground transition-all duration-300 group-hover:translate-x-2">
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent group-hover:scale-[3] group-hover:shadow-[var(--shadow-glow)] transition-all duration-300 animate-pulse" />
                       {feature}
                     </li>
                   ))}
