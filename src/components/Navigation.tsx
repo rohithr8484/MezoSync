@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Wallet, LayoutDashboard } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useAccount } from "wagmi";
-import mezoLogo from "@/assets/mezo-sync-logo.png";
+import mezoLogo from "@/assets/mezo-sync-logo-v2.png";
 
 const Navigation = () => {
   const { isConnected } = useAccount();
