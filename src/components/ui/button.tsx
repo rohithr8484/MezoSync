@@ -9,14 +9,15 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-md hover:shadow-lg",
-        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90",
-        outline: "border border-input bg-background hover:bg-accent hover:text-accent-foreground",
-        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80",
-        ghost: "hover:bg-accent hover:text-accent-foreground",
-        link: "text-primary underline-offset-4 hover:underline",
-        hero: "bg-accent text-accent-foreground hover:bg-accent/90 shadow-[var(--shadow-accent)] hover:shadow-lg hover:scale-105",
-        heroOutline: "border-2 border-accent/30 bg-accent/10 text-accent hover:bg-accent/20 hover:border-accent/50 backdrop-blur-sm",
+        default: "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[var(--shadow-md)] hover:shadow-[var(--shadow-lg)] hover:scale-[1.02]",
+        destructive: "bg-destructive text-destructive-foreground hover:bg-destructive/90 shadow-md hover:shadow-lg",
+        outline: "border-2 border-input bg-background hover:bg-accent/10 hover:text-accent hover:border-accent/50",
+        secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 shadow-sm hover:shadow-md",
+        ghost: "hover:bg-accent/10 hover:text-accent",
+        link: "text-accent underline-offset-4 hover:underline hover:text-accent/80",
+        hero: "bg-[image:var(--gradient-accent)] text-accent-foreground hover:opacity-90 shadow-[var(--shadow-accent)] hover:shadow-[var(--shadow-glow)] hover:scale-105 font-semibold",
+        heroOutline: "border-2 border-accent/40 bg-accent/10 text-accent hover:bg-accent/20 hover:border-accent/60 backdrop-blur-sm hover:scale-105 font-semibold",
+        premium: "bg-[image:var(--gradient-accent)] text-accent-foreground shadow-[var(--shadow-accent)] hover:shadow-[var(--shadow-glow)] hover:scale-105 relative overflow-hidden before:absolute before:inset-0 before:bg-[image:var(--gradient-glow)] before:opacity-0 hover:before:opacity-100 before:transition-opacity",
       },
       size: {
         default: "h-10 px-4 py-2",

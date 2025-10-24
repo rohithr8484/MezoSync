@@ -41,15 +41,16 @@ const Services = () => {
           {services.map((service, index) => (
             <Card 
               key={index} 
-              className="group hover:shadow-[var(--shadow-xl)] transition-all duration-500 hover:-translate-y-3 border-border/50 bg-card animate-fade-up hover:border-accent/20"
+              className="group hover:shadow-[var(--shadow-xl)] transition-all duration-500 hover:-translate-y-3 border-border/50 bg-card animate-fade-up hover:border-accent/30 relative overflow-hidden"
               style={{
                 animationDelay: `${index * 150}ms`,
                 opacity: 0,
                 animationFillMode: 'forwards'
               }}
             >
-              <CardContent className="p-8 space-y-6">
-                <div className="w-20 h-20 mx-auto rounded-2xl bg-gradient-to-br from-accent/20 to-accent/5 flex items-center justify-center group-hover:scale-110 group-hover:rotate-3 transition-all duration-300 group-hover:shadow-[var(--shadow-accent)]">
+              <div className="absolute inset-0 bg-[image:var(--gradient-mesh)] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              <CardContent className="p-8 space-y-6 relative z-10">
+                <div className="w-20 h-20 mx-auto rounded-2xl bg-[image:var(--gradient-accent)] flex items-center justify-center group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 group-hover:shadow-[var(--shadow-glow)]">
                   <img 
                     src={service.icon} 
                     alt={service.title}
@@ -58,7 +59,7 @@ const Services = () => {
                 </div>
 
                 <div className="space-y-3 text-center">
-                  <h3 className="text-2xl font-bold text-card-foreground group-hover:text-accent transition-colors duration-300">
+                  <h3 className="text-2xl font-bold bg-[image:var(--gradient-accent)] bg-clip-text text-transparent group-hover:scale-105 transition-transform duration-300">
                     {service.title}
                   </h3>
                   <p className="text-muted-foreground leading-relaxed">
@@ -69,7 +70,7 @@ const Services = () => {
                 <ul className="space-y-2">
                   {service.features.map((feature, idx) => (
                     <li key={idx} className="flex items-center gap-2 text-sm text-muted-foreground group-hover:text-foreground transition-colors duration-300">
-                      <div className="w-1.5 h-1.5 rounded-full bg-accent group-hover:scale-150 transition-transform duration-300" />
+                      <div className="w-1.5 h-1.5 rounded-full bg-accent group-hover:scale-[2] group-hover:shadow-[var(--shadow-glow)] transition-all duration-300" />
                       {feature}
                     </li>
                   ))}

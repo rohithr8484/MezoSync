@@ -5,6 +5,7 @@ import QuickActions from "@/components/dashboard/QuickActions";
 import RecentTransactions from "@/components/dashboard/RecentTransactions";
 import SavingsOverview from "@/components/dashboard/SavingsOverview";
 import PythPriceFeed from "@/components/dashboard/PythPriceFeed";
+import NetworkStatus from "@/components/NetworkStatus";
 import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -131,6 +132,7 @@ const Dashboard = () => {
             </div>
             
             <div className="space-y-6">
+              <NetworkStatus />
               <SavingsOverview 
                 savingsBalance={savingsBalance}
                 onSavingsAdded={handleSavingsAdded}
