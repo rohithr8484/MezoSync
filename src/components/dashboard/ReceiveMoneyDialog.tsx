@@ -1,8 +1,9 @@
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Copy, QrCode } from "lucide-react";
+import { Copy } from "lucide-react";
 import { toast } from "sonner";
 import { useAccount } from "wagmi";
+import QRCode from "react-qr-code";
 
 interface ReceiveMoneyDialogProps {
   open: boolean;
@@ -30,8 +31,13 @@ const ReceiveMoneyDialog = ({ open, onOpenChange }: ReceiveMoneyDialogProps) => 
 
         <div className="space-y-6 py-4">
           <div className="flex items-center justify-center">
-            <div className="w-48 h-48 rounded-xl bg-accent/10 flex items-center justify-center border-2 border-accent/20">
-              <QrCode className="w-32 h-32 text-accent" />
+            <div className="p-4 rounded-xl bg-white">
+              <QRCode
+                value={displayAddress}
+                size={192}
+                level="H"
+                style={{ height: "auto", maxWidth: "100%", width: "100%" }}
+              />
             </div>
           </div>
 
