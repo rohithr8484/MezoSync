@@ -3,6 +3,7 @@ import Footer from "@/components/Footer";
 import WalletConnect from "@/components/WalletConnect";
 import WagmiConnect from "@/components/WagmiConnect";
 import BoarConnect from "@/components/BoarConnect";
+import MezoPassportConnect from "@/components/MezoPassport";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Shield } from "lucide-react";
 
@@ -28,10 +29,11 @@ const WalletPage = () => {
           </div>
 
           <Tabs defaultValue="rainbowkit" className="w-full">
-            <TabsList className="grid w-full grid-cols-3 mb-8">
+            <TabsList className="grid w-full grid-cols-4 mb-8">
               <TabsTrigger value="rainbowkit">RainbowKit</TabsTrigger>
               <TabsTrigger value="wagmi">Wagmi</TabsTrigger>
               <TabsTrigger value="boar">Boar Wallet</TabsTrigger>
+              <TabsTrigger value="passport">Mezo Passport</TabsTrigger>
             </TabsList>
 
             <TabsContent value="rainbowkit" className="space-y-6">
@@ -55,6 +57,12 @@ const WalletPage = () => {
             <TabsContent value="boar" className="space-y-6">
               <div className="flex justify-center">
                 <BoarConnect />
+              </div>
+            </TabsContent>
+
+            <TabsContent value="passport" className="space-y-6">
+              <div className="flex justify-center">
+                <MezoPassportConnect />
               </div>
             </TabsContent>
           </Tabs>
