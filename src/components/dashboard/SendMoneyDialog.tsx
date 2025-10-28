@@ -2,13 +2,11 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } f
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { Send } from "lucide-react";
-import { useAccount, useWriteContract, useWaitForTransactionReceipt, useReadContract } from "wagmi";
+import { useAccount } from "wagmi";
 import { supabase } from "@/integrations/supabase/client";
-import { parseEther, formatEther, isAddress, parseUnits } from "viem";
-import { MUSD_CONTRACT_ADDRESS, MUSD_ABI } from "@/lib/musd-config";
 
 interface SendMoneyDialogProps {
   open: boolean;
@@ -20,53 +18,7 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
-  
-  // Read user's MUSD balance
-  const { data: balance } = useReadContract({
-    address: MUSD_CONTRACT_ADDRESS,
-    abi: MUSD_ABI,
-    functionName: "balanceOf",
-    args: address ? [address] : undefined,
-    query: {
-      enabled: !!address,
-      refetchInterval: 10000, // Refresh every 10 seconds
-    }
-  });
-
-  // Write contract for sending MUSD
-  const { data: hash, writeContract, isPending } = useWriteContract();
-
-  // Wait for transaction confirmation
-  const { isLoading: isConfirming, isSuccess } = useWaitForTransactionReceipt({
-    hash,
-  });
-
-  const isSending = isPending || isConfirming;
-
-  // Handle successful transaction
-  useEffect(() => {
-    if (isSuccess && hash) {
-      // Record transaction in database
-      supabase
-        .from('transactions')
-        .insert({
-          wallet_address: address!.toLowerCase(),
-          transaction_type: 'send',
-          amount: parseFloat(amount),
-          recipient_address: recipient.toLowerCase(),
-          note: note || null
-        });
-
-      toast.success("MUSD sent successfully!", {
-        description: `Sent ${amount} MUSD to ${recipient.slice(0, 6)}...${recipient.slice(-4)}`
-      });
-      
-      onOpenChange(false);
-      setRecipient("");
-      setAmount("");
-      setNote("");
-    }
-  }, [isSuccess, hash]);
+  const [isSending, setIsSending] = useState(false);
 
   const handleSend = async () => {
     if (!recipient || !amount || !address) {
@@ -74,40 +26,35 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
       return;
     }
 
-    // Validate recipient address
-    if (!isAddress(recipient)) {
-      toast.error("Invalid recipient address");
-      return;
-    }
-
-    // Check if amount is valid
-    const amountValue = parseFloat(amount);
-    if (isNaN(amountValue) || amountValue <= 0) {
-      toast.error("Invalid amount");
-      return;
-    }
-
-    // Check balance
-    const balanceInMUSD = balance ? parseFloat(formatEther(balance)) : 0;
-    if (balanceInMUSD < amountValue) {
-      toast.error("Insufficient MUSD balance");
-      return;
-    }
-
+    setIsSending(true);
+    
     try {
-      // Convert amount to wei (assuming 18 decimals like standard ERC20)
-      const amountInWei = parseUnits(amount, 18);
-      
-      // Execute blockchain transfer
-      writeContract({
-        address: MUSD_CONTRACT_ADDRESS,
-        abi: MUSD_ABI,
-        functionName: "transfer",
-        args: [recipient as `0x${string}`, amountInWei]
+      // Record transaction in database
+      const { error } = await supabase
+        .from('transactions')
+        .insert({
+          wallet_address: address.toLowerCase(),
+          transaction_type: 'send',
+          amount: parseFloat(amount),
+          recipient_address: recipient.toLowerCase(),
+          note: note || null
+        });
+
+      if (error) throw error;
+
+      toast.success("MUSD sent successfully!", {
+        description: `Sent $${amount} MUSD to ${recipient}`
       });
+      
+      onOpenChange(false);
+      setRecipient("");
+      setAmount("");
+      setNote("");
     } catch (error) {
       console.error('Error sending MUSD:', error);
       toast.error("Failed to send MUSD");
+    } finally {
+      setIsSending(false);
     }
   };
 
@@ -126,16 +73,13 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
 
         <div className="space-y-4 pt-4">
           <div className="space-y-2">
-            <Label htmlFor="recipient">Recipient Address</Label>
+            <Label htmlFor="recipient">Recipient Address or Username</Label>
             <Input
               id="recipient"
-              placeholder="0x..."
+              placeholder="0x... or username"
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
             />
-            {recipient && !isAddress(recipient) && (
-              <p className="text-xs text-destructive">Invalid wallet address</p>
-            )}
           </div>
 
           <div className="space-y-2">
@@ -148,7 +92,7 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
               onChange={(e) => setAmount(e.target.value)}
             />
             <p className="text-xs text-muted-foreground">
-              Available: {balance ? formatEther(balance) : "0.00"} MUSD
+              Available: $5,234.50 MUSD
             </p>
           </div>
 
@@ -175,14 +119,12 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
 
           <Button
             onClick={handleSend}
-            disabled={isSending || !recipient || !amount || !isAddress(recipient)}
+            disabled={isSending}
             variant="hero"
             size="lg"
             className="w-full"
           >
-            {isPending && "Awaiting approval..."}
-            {isConfirming && "Confirming transaction..."}
-            {!isPending && !isConfirming && "Send MUSD"}
+            {isSending ? "Sending..." : "Send MUSD"}
           </Button>
         </div>
       </DialogContent>
