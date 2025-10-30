@@ -62,8 +62,8 @@ Supported Feeds:
 BTC/USD: 0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43
 ETH/USD: 0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace
 USDT/USD: 0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b
-Mezo Network Configuration
 
+Mezo Network Configuration
 2. Mezo Mainnet
 Chain ID: 0x7B7C (31612 decimal)
 Network Name: Mezo Network
