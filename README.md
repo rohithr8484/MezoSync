@@ -35,6 +35,7 @@ Send money across borders without the high fees. Best exchange rates, guaranteed
 - **Sats Connect** - Bitcoin transaction handling
 - **Wagmi + Viem** - Blockchain interaction
 - **MUSD Integration** - Stablecoin operations
+- **Validation Cloud** - Managed blockchain infrastructure + secure RPC provider for Mezo and other networks.
 
 ### State Management & Forms
 - **React Query** - Server state management
