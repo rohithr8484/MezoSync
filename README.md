@@ -51,30 +51,42 @@ Send money across borders without the high fees. Best exchange rates, guaranteed
 
 <img width="466" height="818" alt="image" src="https://github.com/user-attachments/assets/af9cdfc5-f303-4bcc-9523-88f75854618e" />
 
-## Contracts and Addresses
+# 🧠 Contracts and Addresses
 
-1. Pyth Network Oracle Contract
-Address: 0x2880aB155794e7179c9eE2e38200202908C17B43 (mainnet & testnet)
-Type: Price Feed Oracle
-Location: src/lib/pyth-config.ts
-Purpose: Real-time price feeds for crypto assets
-Supported Feeds:
-BTC/USD: 0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43
-ETH/USD: 0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace
-USDT/USD: 0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b
+## 1. Pyth Network Oracle
 
-Mezo Network Configuration
-2. Mezo Mainnet
-Chain ID: 0x7B7C (31612 decimal)
-Network Name: Mezo Network
-RPC Endpoints:
-HTTP: https://rpc-http.mezo.boar.network/ (via Boar Network)
-WSS: wss://rpc-ws.mezo.boar.network/ (via Boar Network)
-Validation Cloud RPC: Available via src/lib/validation-cloud.ts
-Block Explorer: https://explorer.mezo.org
-Currency:
-Symbol: BTC
-Decimals: 18
+**Contract Address:**  
+`0x2880aB155794e7179c9eE2e38200202908C17B43`  
+*(Mainnet & Testnet)*
+
+**Type:**  
+Price Feed Oracle
+
+**Purpose:**  
+Provides real-time price feeds for crypto assets.
+
+**Supported Feeds:**
+
+| Asset Pair | Feed Address |
+|-------------|--------------|
+| **BTC/USD** | `0xe62df6c8b4a85fe1a67db44dc12de5db330f7ac66b72dc658afedf0f4a415b43` |
+| **ETH/USD** | `0xff61491a931112ddf1bd8147cd1b641375f79f5825126d665480874634fd0ace` |
+| **USDT/USD** | `0x2b89b9dc8fdf9f34709a5b106b472f0f39bb6ca9ce04b0fd7f2e971688e2e53b` |
+
+---
+
+## 2. Mezo Network Configuration
+
+**Network Name:** Mezo Network  
+
+**RPC Endpoints:**
+- **HTTP:** `https://rpc-http.mezo.boar.network/` (via Boar Network)  
+- **WSS:** `wss://rpc-ws.mezo.boar.network/` (via Boar Network)
+
+**Block Explorer:**  
+[https://explorer.mezo.org](https://explorer.mezo.org)
+
+
 
 
 ## 🚀 Quick Start
