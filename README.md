@@ -48,6 +48,10 @@ Send money across borders without the high fees. Best exchange rates, guaranteed
 - **Recharts** - Data visualization
 - **Embla Carousel** - Smooth carousel components
 
+## 🛠 Technical Architecture
+<img width="333" height="482" alt="image" src="https://github.com/user-attachments/assets/66065813-bc8c-45d9-960c-1a8a96a5f15e" />
+
+
 ## Components
 
 <img width="466" height="818" alt="image" src="https://github.com/user-attachments/assets/af9cdfc5-f303-4bcc-9523-88f75854618e" />
