@@ -1,4 +1,4 @@
-# Simple Financial Services
+# Mezo Sync - Simple Financial Services
 
 Everything you need to manage your money, without the complexity. Built on Mezo and MUSD for secure, efficient financial operations.
 
