@@ -65,8 +65,8 @@ Send money across borders without the high fees. Best exchange rates, guaranteed
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/simple-financial-services.git
-cd simple-financial-services
+git clone https://github.com/rohithr8484/MezoSync.git
+cd MezoSync
 
 # Install dependencies
 npm install
