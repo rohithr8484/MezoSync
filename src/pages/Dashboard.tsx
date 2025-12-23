@@ -1,6 +1,6 @@
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import AccountBalance from "@/components/dashboard/AccountBalance";
+
 import QuickActions from "@/components/dashboard/QuickActions";
 import RecentTransactions from "@/components/dashboard/RecentTransactions";
 import SavingsOverview from "@/components/dashboard/SavingsOverview";
@@ -122,7 +122,6 @@ const Dashboard = () => {
 
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
-              <AccountBalance />
               <PythPriceFeed />
               <QuickActions 
                 currentSavings={savingsBalance}
