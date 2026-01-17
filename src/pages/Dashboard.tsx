@@ -5,6 +5,8 @@ import QuickActions from "@/components/dashboard/QuickActions";
 import RecentTransactions from "@/components/dashboard/RecentTransactions";
 import SavingsOverview from "@/components/dashboard/SavingsOverview";
 import PythPriceFeed from "@/components/dashboard/PythPriceFeed";
+import MUSDInfo from "@/components/dashboard/MUSDInfo";
+import FAQ from "@/components/dashboard/FAQ";
 import NetworkStatus from "@/components/NetworkStatus";
 import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
@@ -115,10 +117,15 @@ const Dashboard = () => {
         <div className="container mx-auto max-w-7xl space-y-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-              <p className="text-muted-foreground">Manage your MUSD, simplified</p>
+              <h1 className="text-3xl md:text-4xl font-display font-bold text-foreground tracking-tight">
+                Dashboard
+              </h1>
+              <p className="text-muted-foreground mt-1">Manage your MUSD, simplified</p>
             </div>
           </div>
+
+          {/* MUSD Info Section */}
+          <MUSDInfo />
 
           <div className="grid lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 space-y-6">
@@ -138,6 +145,9 @@ const Dashboard = () => {
               />
             </div>
           </div>
+
+          {/* FAQ Section */}
+          <FAQ />
         </div>
       </main>
 
