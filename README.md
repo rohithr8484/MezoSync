@@ -51,7 +51,8 @@ Send money across borders without the high fees. Best exchange rates, guaranteed
 - **Embla Carousel** - Smooth carousel components
 
 ## 🛠 Technical Architecture
-<img width="487" height="415" alt="image" src="https://github.com/user-attachments/assets/e8cd0ae5-ebaf-4939-8c59-c6b2b52227c4" />
+<img width="1024" height="1536" alt="ChatGPT Image Jan 18, 2026, 05_58_05 PM" src="https://github.com/user-attachments/assets/8bd8674a-a7b3-45b9-8b64-4689e6192bb3" />
+
 
 
 
