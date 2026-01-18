@@ -6,6 +6,7 @@ import RecentTransactions from "@/components/dashboard/RecentTransactions";
 import SavingsOverview from "@/components/dashboard/SavingsOverview";
 import PythPriceFeed from "@/components/dashboard/PythPriceFeed";
 import MUSDInfo from "@/components/dashboard/MUSDInfo";
+import MUSDRewards from "@/components/dashboard/MUSDRewards";
 import FAQ from "@/components/dashboard/FAQ";
 import NetworkStatus from "@/components/NetworkStatus";
 import { useAccount } from "wagmi";
@@ -127,8 +128,11 @@ const Dashboard = () => {
           {/* MUSD Info Section */}
           <MUSDInfo />
 
-          <div className="grid lg:grid-cols-3 gap-6">
-            <div className="lg:col-span-2 space-y-6">
+          {/* MUSD Rewards Section */}
+          <MUSDRewards />
+
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="lg:col-span-2 space-y-4 sm:space-y-6">
               <PythPriceFeed />
               <QuickActions 
                 currentSavings={savingsBalance}
@@ -137,7 +141,7 @@ const Dashboard = () => {
               <RecentTransactions />
             </div>
             
-            <div className="space-y-6">
+            <div className="space-y-4 sm:space-y-6">
               <NetworkStatus />
               <SavingsOverview 
                 savingsBalance={savingsBalance}

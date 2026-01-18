@@ -14,21 +14,22 @@ const SavingsOverview = ({ savingsBalance, onSavingsAdded }: { savingsBalance: n
   return (
     <div className="space-y-6">
       <Card className="border-accent/30">
-        <CardContent className="p-6 space-y-6">
-          <div className="flex items-start justify-between">
+        <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 sm:gap-0">
             <div>
               <div className="flex items-center gap-2 mb-2">
                 <PiggyBank className="w-5 h-5 text-accent" />
                 <h3 className="font-semibold">Savings Account</h3>
               </div>
-              <p className="text-3xl font-bold text-foreground">${savingsBalance.toFixed(2)} <span className="text-base text-muted-foreground font-normal">MUSD Balance</span></p>
+              <p className="text-2xl sm:text-3xl font-bold text-foreground">
+                ${savingsBalance.toFixed(2)} 
+                <span className="text-sm sm:text-base text-muted-foreground font-normal ml-1">MUSD</span>
+              </p>
             </div>
             
-            <div className="text-right">
-              <div className="flex items-center gap-1 text-green-600 text-sm font-medium">
-                <TrendingUp className="w-4 h-4" />
-                {apy} APY
-              </div>
+            <div className="flex items-center gap-1 text-green-600 text-sm font-medium">
+              <TrendingUp className="w-4 h-4" />
+              {apy} APY
             </div>
           </div>
 
