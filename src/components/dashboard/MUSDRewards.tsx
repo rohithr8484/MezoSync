@@ -12,7 +12,13 @@ import {
   Wallet,
   Send,
   PiggyBank,
-  Shield
+  Shield,
+  Percent,
+  Flame,
+  Heart,
+  Trophy,
+  Store,
+  Zap
 } from "lucide-react";
 import { useState } from "react";
 import { useAccount } from "wagmi";
@@ -25,11 +31,21 @@ interface Task {
   reward: number;
   completed: boolean;
   icon: React.ElementType;
+  category: 'onboarding' | 'cashback' | 'streaks' | 'referral' | 'social' | 'challenges' | 'merchant';
+}
+
+interface RewardFeature {
+  icon: React.ElementType;
+  title: string;
+  description: string;
+  rate: string;
+  color: string;
 }
 
 const MUSDRewards = () => {
   const { address } = useAccount();
   const [tasks, setTasks] = useState<Task[]>([
+    // Onboarding Tasks
     {
       id: "connect_wallet",
       title: "Connect Wallet",
@@ -37,6 +53,7 @@ const MUSDRewards = () => {
       reward: 5,
       completed: true,
       icon: Wallet,
+      category: 'onboarding',
     },
     {
       id: "first_save",
@@ -45,6 +62,7 @@ const MUSDRewards = () => {
       reward: 10,
       completed: false,
       icon: PiggyBank,
+      category: 'onboarding',
     },
     {
       id: "first_send",
@@ -53,6 +71,7 @@ const MUSDRewards = () => {
       reward: 5,
       completed: false,
       icon: Send,
+      category: 'onboarding',
     },
     {
       id: "verify_profile",
@@ -61,8 +80,93 @@ const MUSDRewards = () => {
       reward: 15,
       completed: false,
       icon: Shield,
+      category: 'onboarding',
+    },
+    // Streak Tasks
+    {
+      id: "daily_streak_3",
+      title: "3-Day Streak",
+      description: "Use MezoSync 3 days in a row",
+      reward: 5,
+      completed: false,
+      icon: Flame,
+      category: 'streaks',
+    },
+    {
+      id: "weekly_streak",
+      title: "Weekly Warrior",
+      description: "Complete 7-day payment streak",
+      reward: 15,
+      completed: false,
+      icon: Zap,
+      category: 'streaks',
+    },
+    // Social Tasks
+    {
+      id: "first_reaction",
+      title: "First Reaction",
+      description: "React to a transaction in feed",
+      reward: 2,
+      completed: false,
+      icon: Heart,
+      category: 'social',
+    },
+    // Challenge Tasks
+    {
+      id: "bronze_badge",
+      title: "Bronze Badge",
+      description: "Complete 10 transactions",
+      reward: 20,
+      completed: false,
+      icon: Trophy,
+      category: 'challenges',
     },
   ]);
+
+  const rewardFeatures: RewardFeature[] = [
+    {
+      icon: Percent,
+      title: "Cashback",
+      description: "Earn 0.5-1% on P2P & merchant payments",
+      rate: "Up to 1%",
+      color: "text-green-500",
+    },
+    {
+      icon: Flame,
+      title: "Payment Streaks",
+      description: "Bonus MUSD for daily/weekly usage",
+      rate: "Up to 15 MUSD",
+      color: "text-orange-500",
+    },
+    {
+      icon: Users,
+      title: "Referral Rewards",
+      description: "Both users earn on first payment",
+      rate: "10 MUSD each",
+      color: "text-blue-500",
+    },
+    {
+      icon: Heart,
+      title: "Social Engagement",
+      description: "Earn for reactions, notes & activity",
+      rate: "2-5 MUSD",
+      color: "text-pink-500",
+    },
+    {
+      icon: Trophy,
+      title: "Challenges & Badges",
+      description: "Level up to unlock higher rewards",
+      rate: "20+ MUSD",
+      color: "text-yellow-500",
+    },
+    {
+      icon: Store,
+      title: "Merchant Offers",
+      description: "Extra cashback at partner stores",
+      rate: "Up to 5%",
+      color: "text-purple-500",
+    },
+  ];
 
   const completedTasks = tasks.filter(t => t.completed).length;
   const totalTasks = tasks.length;
@@ -96,121 +200,135 @@ const MUSDRewards = () => {
     }
   };
 
+  // Get onboarding tasks only for the main task list
+  const onboardingTasks = tasks.filter(t => t.category === 'onboarding');
+
   return (
     <Card className="bg-gradient-to-br from-card via-card to-accent/5 border-border/50 overflow-hidden relative">
-      <div className="absolute top-0 left-0 w-48 h-48 bg-accent/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />
-      <div className="absolute bottom-0 right-0 w-32 h-32 bg-primary/5 rounded-full blur-2xl translate-y-1/2 translate-x-1/2" />
+      <div className="absolute top-0 left-0 w-32 h-32 bg-accent/5 rounded-full blur-3xl -translate-y-1/2 -translate-x-1/2" />
       
       <CardHeader className="pb-2">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-accent/10 ring-1 ring-accent/20">
-              <Gift className="w-6 h-6 text-accent" />
-            </div>
-            <div>
-              <CardTitle className="text-xl font-bold font-display">MUSD Rewards</CardTitle>
-              <p className="text-sm text-muted-foreground">Complete tasks & earn MUSD</p>
-            </div>
+        <div className="flex items-center gap-3">
+          <div className="p-2 rounded-xl bg-accent/10 ring-1 ring-accent/20">
+            <Gift className="w-5 h-5 text-accent" />
           </div>
-          <Badge variant="outline" className="w-fit text-sm font-mono border-accent/30 text-accent px-3 py-1">
-            {earnedRewards} / {totalRewards} MUSD
+          <div className="flex-1 min-w-0">
+            <CardTitle className="text-lg font-bold font-display">MUSD Rewards</CardTitle>
+            <p className="text-xs text-muted-foreground">Earn MUSD daily</p>
+          </div>
+          <Badge variant="outline" className="text-xs font-mono border-accent/30 text-accent px-2 py-0.5">
+            {earnedRewards}/{totalRewards}
           </Badge>
         </div>
       </CardHeader>
       
-      <CardContent className="space-y-6">
+      <CardContent className="space-y-4">
         {/* Progress Bar */}
-        <div className="space-y-2">
-          <div className="flex justify-between text-sm">
-            <span className="text-muted-foreground">{completedTasks} of {totalTasks} tasks completed</span>
+        <div className="space-y-1.5">
+          <div className="flex justify-between text-xs">
+            <span className="text-muted-foreground">{completedTasks}/{totalTasks} tasks</span>
             <span className="font-medium text-accent">{progress.toFixed(0)}%</span>
           </div>
-          <Progress value={progress} className="h-2.5" />
+          <Progress value={progress} className="h-2" />
         </div>
 
-        {/* Tasks Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {tasks.map((task) => {
-            const Icon = task.icon;
+        {/* Reward Features Grid */}
+        <div className="grid grid-cols-2 gap-2">
+          {rewardFeatures.map((feature, index) => {
+            const Icon = feature.icon;
             return (
               <div
-                key={task.id}
-                className={`
-                  flex items-center gap-3 p-3.5 rounded-xl border transition-all
-                  ${task.completed 
-                    ? 'bg-accent/5 border-accent/30' 
-                    : 'bg-background/60 border-border/50 hover:border-accent/20'
-                  }
-                `}
+                key={index}
+                className="p-2.5 rounded-lg bg-background/60 border border-border/50 hover:border-accent/20 transition-colors"
               >
-                <div className={`
-                  p-2 rounded-lg shrink-0
-                  ${task.completed ? 'bg-accent/20' : 'bg-muted/50'}
-                `}>
-                  <Icon className={`w-4 h-4 ${task.completed ? 'text-accent' : 'text-muted-foreground'}`} />
+                <div className="flex items-center gap-2 mb-1">
+                  <Icon className={`w-3.5 h-3.5 ${feature.color}`} />
+                  <span className="text-xs font-semibold truncate">{feature.title}</span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2">
-                    <p className={`text-sm font-semibold truncate ${task.completed ? 'text-accent' : 'text-foreground'}`}>
-                      {task.title}
-                    </p>
-                    {task.completed ? (
-                      <CheckCircle2 className="w-4 h-4 text-accent shrink-0" />
-                    ) : (
-                      <Circle className="w-4 h-4 text-muted-foreground/50 shrink-0" />
-                    )}
-                  </div>
-                  <p className="text-xs text-muted-foreground truncate">{task.description}</p>
-                </div>
-                <Badge 
-                  variant={task.completed ? "default" : "secondary"} 
-                  className={`shrink-0 text-xs font-mono ${task.completed ? 'bg-accent text-accent-foreground' : ''}`}
-                >
-                  +{task.reward}
+                <p className="text-[10px] text-muted-foreground line-clamp-1">{feature.description}</p>
+                <Badge variant="secondary" className="mt-1.5 text-[10px] px-1.5 py-0">
+                  {feature.rate}
                 </Badge>
               </div>
             );
           })}
         </div>
 
+        {/* Active Tasks */}
+        <div className="space-y-2">
+          <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wider">Active Tasks</h4>
+          <div className="space-y-1.5">
+            {onboardingTasks.slice(0, 3).map((task) => {
+              const Icon = task.icon;
+              return (
+                <div
+                  key={task.id}
+                  className={`
+                    flex items-center gap-2.5 p-2.5 rounded-lg border transition-all
+                    ${task.completed 
+                      ? 'bg-accent/5 border-accent/30' 
+                      : 'bg-background/60 border-border/50'
+                    }
+                  `}
+                >
+                  <div className={`p-1.5 rounded-md shrink-0 ${task.completed ? 'bg-accent/20' : 'bg-muted/50'}`}>
+                    <Icon className={`w-3.5 h-3.5 ${task.completed ? 'text-accent' : 'text-muted-foreground'}`} />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <p className={`text-xs font-semibold truncate ${task.completed ? 'text-accent' : ''}`}>
+                        {task.title}
+                      </p>
+                      {task.completed ? (
+                        <CheckCircle2 className="w-3 h-3 text-accent shrink-0" />
+                      ) : (
+                        <Circle className="w-3 h-3 text-muted-foreground/50 shrink-0" />
+                      )}
+                    </div>
+                  </div>
+                  <Badge 
+                    variant={task.completed ? "default" : "secondary"} 
+                    className={`shrink-0 text-[10px] font-mono px-1.5 py-0 ${task.completed ? 'bg-accent text-accent-foreground' : ''}`}
+                  >
+                    +{task.reward}
+                  </Badge>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Invite Section */}
-        <div className="p-4 rounded-xl bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/20 space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="p-2.5 rounded-xl bg-primary/20">
-              <Users className="w-5 h-5 text-primary" />
+        <div className="p-3 rounded-xl bg-gradient-to-r from-primary/10 via-accent/10 to-primary/10 border border-primary/20 space-y-3">
+          <div className="flex items-center gap-2.5">
+            <div className="p-2 rounded-lg bg-primary/20">
+              <Users className="w-4 h-4 text-primary" />
             </div>
             <div>
-              <h4 className="font-semibold text-foreground">Invite Friends</h4>
-              <p className="text-sm text-muted-foreground">Earn 10 MUSD for each friend who joins</p>
+              <h4 className="text-sm font-semibold">Invite Friends</h4>
+              <p className="text-xs text-muted-foreground">Both earn 10 MUSD</p>
             </div>
           </div>
           
-          <div className="flex flex-col sm:flex-row gap-2">
-            <div className="flex-1 flex items-center gap-2 px-3 py-2.5 bg-background/80 rounded-lg border border-border/50 overflow-hidden">
-              <span className="text-sm font-mono text-muted-foreground truncate flex-1">
-                {inviteLink}
-              </span>
-            </div>
-            <div className="flex gap-2 shrink-0">
-              <Button 
-                variant="heroOutline" 
-                size="sm" 
-                onClick={copyInviteLink}
-                className="flex-1 sm:flex-none"
-              >
-                <Copy className="w-4 h-4 mr-2" />
-                Copy
-              </Button>
-              <Button 
-                variant="hero" 
-                size="sm" 
-                onClick={shareInvite}
-                className="flex-1 sm:flex-none"
-              >
-                <Share2 className="w-4 h-4 mr-2" />
-                Share
-              </Button>
-            </div>
+          <div className="flex gap-2">
+            <Button 
+              variant="heroOutline" 
+              size="sm" 
+              onClick={copyInviteLink}
+              className="flex-1 text-xs h-8"
+            >
+              <Copy className="w-3.5 h-3.5 mr-1.5" />
+              Copy Link
+            </Button>
+            <Button 
+              variant="hero" 
+              size="sm" 
+              onClick={shareInvite}
+              className="flex-1 text-xs h-8"
+            >
+              <Share2 className="w-3.5 h-3.5 mr-1.5" />
+              Share
+            </Button>
           </div>
         </div>
       </CardContent>
