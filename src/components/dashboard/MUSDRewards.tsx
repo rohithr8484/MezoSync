@@ -40,10 +40,38 @@ interface RewardFeature {
   description: string;
   rate: string;
   color: string;
+  action?: () => void;
 }
 
 const MUSDRewards = () => {
   const { address } = useAccount();
+
+  // Generate invite link based on wallet address
+  const inviteLink = address 
+    ? `${window.location.origin}?ref=${address.slice(0, 8)}` 
+    : `${window.location.origin}?ref=guest`;
+
+  const copyInviteLink = () => {
+    navigator.clipboard.writeText(inviteLink);
+    toast.success("Invite link copied to clipboard!");
+  };
+
+  const shareInvite = async () => {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: "Join MezoSync",
+          text: "Join MezoSync and get 10 MUSD bonus! Use my referral link:",
+          url: inviteLink,
+        });
+      } catch (error) {
+        copyInviteLink();
+      }
+    } else {
+      copyInviteLink();
+    }
+  };
+
   const [tasks, setTasks] = useState<Task[]>([
     // Onboarding Tasks
     {
@@ -130,6 +158,7 @@ const MUSDRewards = () => {
       description: "Earn 0.5-1% on P2P & merchant payments",
       rate: "Up to 1%",
       color: "text-green-500",
+      action: () => toast.info("Complete payments to earn cashback automatically!"),
     },
     {
       icon: Flame,
@@ -137,6 +166,7 @@ const MUSDRewards = () => {
       description: "Bonus MUSD for daily/weekly usage",
       rate: "Up to 15 MUSD",
       color: "text-orange-500",
+      action: () => toast.info("Make a payment today to start your streak!"),
     },
     {
       icon: Users,
@@ -144,6 +174,7 @@ const MUSDRewards = () => {
       description: "Both users earn on first payment",
       rate: "10 MUSD each",
       color: "text-blue-500",
+      action: shareInvite,
     },
     {
       icon: Heart,
@@ -151,6 +182,7 @@ const MUSDRewards = () => {
       description: "Earn for reactions, notes & activity",
       rate: "2-5 MUSD",
       color: "text-pink-500",
+      action: () => toast.info("React to transactions in your feed to earn MUSD!"),
     },
     {
       icon: Trophy,
@@ -158,6 +190,7 @@ const MUSDRewards = () => {
       description: "Level up to unlock higher rewards",
       rate: "20+ MUSD",
       color: "text-yellow-500",
+      action: () => toast.info("Complete 10 transactions to earn Bronze Badge!"),
     },
     {
       icon: Store,
@@ -165,6 +198,7 @@ const MUSDRewards = () => {
       description: "Extra cashback at partner stores",
       rate: "Up to 5%",
       color: "text-purple-500",
+      action: () => toast.info("Partner merchant program coming soon!"),
     },
   ];
 
@@ -173,32 +207,6 @@ const MUSDRewards = () => {
   const earnedRewards = tasks.filter(t => t.completed).reduce((sum, t) => sum + t.reward, 0);
   const totalRewards = tasks.reduce((sum, t) => sum + t.reward, 0);
   const progress = (completedTasks / totalTasks) * 100;
-
-  // Generate invite link based on wallet address
-  const inviteLink = address 
-    ? `${window.location.origin}?ref=${address.slice(0, 8)}` 
-    : `${window.location.origin}?ref=guest`;
-
-  const copyInviteLink = () => {
-    navigator.clipboard.writeText(inviteLink);
-    toast.success("Invite link copied to clipboard!");
-  };
-
-  const shareInvite = async () => {
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: "Join MezoSync",
-          text: "Join MezoSync and get 10 MUSD bonus! Use my referral link:",
-          url: inviteLink,
-        });
-      } catch (error) {
-        copyInviteLink();
-      }
-    } else {
-      copyInviteLink();
-    }
-  };
 
   // Get onboarding tasks only for the main task list
   const onboardingTasks = tasks.filter(t => t.category === 'onboarding');
@@ -237,9 +245,10 @@ const MUSDRewards = () => {
           {rewardFeatures.map((feature, index) => {
             const Icon = feature.icon;
             return (
-              <div
+              <button
                 key={index}
-                className="p-2.5 rounded-lg bg-background/60 border border-border/50 hover:border-accent/20 transition-colors"
+                onClick={feature.action}
+                className="p-2.5 rounded-lg bg-background/60 border border-border/50 hover:border-accent/40 hover:bg-accent/5 transition-all text-left cursor-pointer"
               >
                 <div className="flex items-center gap-2 mb-1">
                   <Icon className={`w-3.5 h-3.5 ${feature.color}`} />
@@ -249,7 +258,7 @@ const MUSDRewards = () => {
                 <Badge variant="secondary" className="mt-1.5 text-[10px] px-1.5 py-0">
                   {feature.rate}
                 </Badge>
-              </div>
+              </button>
             );
           })}
         </div>
