@@ -64,10 +64,15 @@ Send money across borders without the high fees. Best exchange rates, guaranteed
 ## ENV Variables
 
 VITE_SUPABASE_PROJECT_ID=""
+
 VITE_SUPABASE_PUBLISHABLE_KEY=""
+
 VITE_SUPABASE_URL=""
+
 VITE_WALLETCONNECT_PROJECT_ID="
+
 VITE_VALIDATION_CLOUD_RPC_URL=""
+
 VITE_PYTH_PRICE_SERVICE_URL="""
 
 
