@@ -1,0 +1,52 @@
+// Hardhat deployment script for Mezo Sync contracts
+// Run with: npx hardhat run scripts/deploy.ts --network mezo
+
+import { ethers } from "hardhat";
+
+async function main() {
+  const [deployer] = await ethers.getSigners();
+  
+  console.log("Deploying contracts with account:", deployer.address);
+  console.log("Account balance:", (await deployer.provider.getBalance(deployer.address)).toString());
+
+  // MUSD Token address on Mezo (update this with actual MUSD address)
+  const MUSD_TOKEN_ADDRESS = "0x0000000000000000000000000000000000000000"; // TODO: Replace with actual MUSD
+
+  // Deploy Payments Contract
+  console.log("\n📤 Deploying MezoSyncPayments...");
+  const Payments = await ethers.getContractFactory("MezoSyncPayments");
+  const payments = await Payments.deploy(MUSD_TOKEN_ADDRESS);
+  await payments.waitForDeployment();
+  const paymentsAddress = await payments.getAddress();
+  console.log("✅ MezoSyncPayments deployed to:", paymentsAddress);
+
+  // Deploy Bills Contract
+  console.log("\n📤 Deploying MezoSyncBills...");
+  const Bills = await ethers.getContractFactory("MezoSyncBills");
+  const bills = await Bills.deploy(MUSD_TOKEN_ADDRESS);
+  await bills.waitForDeployment();
+  const billsAddress = await bills.getAddress();
+  console.log("✅ MezoSyncBills deployed to:", billsAddress);
+
+  // Summary
+  console.log("\n" + "=".repeat(50));
+  console.log("🎉 DEPLOYMENT COMPLETE");
+  console.log("=".repeat(50));
+  console.log("\nContract Addresses:");
+  console.log(`  MezoSyncPayments: ${paymentsAddress}`);
+  console.log(`  MezoSyncBills:    ${billsAddress}`);
+  console.log("\nNetwork: Mezo (Chain ID: 31612)");
+  console.log("\n⚠️  Update these addresses in:");
+  console.log("  - src/lib/contracts/payments-abi.ts");
+  console.log("  - src/lib/contracts/bills-abi.ts");
+  console.log("\n📝 Verify on Mezo Explorer:");
+  console.log(`  https://explorer.mezo.org/address/${paymentsAddress}`);
+  console.log(`  https://explorer.mezo.org/address/${billsAddress}`);
+}
+
+main()
+  .then(() => process.exit(0))
+  .catch((error) => {
+    console.error(error);
+    process.exit(1);
+  });
