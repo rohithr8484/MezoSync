@@ -1,17 +1,15 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { FileText, Plus, Clock, CheckCircle2, XCircle, ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { FileText, Plus, Clock, CheckCircle2, XCircle } from "lucide-react";
+import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
 import { Skeleton } from "@/components/ui/skeleton";
 import { formatDistanceToNow } from "date-fns";
 import CreateInvoiceDialog from "./CreateInvoiceDialog";
 
 interface Invoice {
-  id: string;
+  id?: string;
   invoice_id: string;
   client_name: string;
   description: string;
@@ -20,29 +18,34 @@ interface Invoice {
   status: string;
   due_date: string | null;
   created_at: string;
+  creator_address: string;
 }
 
 const InvoicesSection = () => {
   const { address } = useAccount();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const { data: invoices, isLoading, refetch } = useQuery({
-    queryKey: ['invoices', address],
-    queryFn: async () => {
-      if (!address) return [];
+  const loadInvoices = () => {
+    if (!address) {
+      setInvoices([]);
+      setIsLoading(false);
+      return;
+    }
 
-      const { data, error } = await supabase
-        .from('invoices')
-        .select('*')
-        .eq('creator_address', address.toLowerCase())
-        .order('created_at', { ascending: false })
-        .limit(5);
+    // Load from localStorage temporarily (until database table is created)
+    const storedInvoices = JSON.parse(localStorage.getItem('invoices') || '[]');
+    const userInvoices = storedInvoices.filter(
+      (inv: Invoice) => inv.creator_address === address.toLowerCase()
+    );
+    setInvoices(userInvoices.slice(0, 5));
+    setIsLoading(false);
+  };
 
-      if (error) throw error;
-      return data as Invoice[];
-    },
-    enabled: !!address,
-  });
+  useEffect(() => {
+    loadInvoices();
+  }, [address]);
 
   const getStatusIcon = (status: string) => {
     switch (status) {
@@ -170,7 +173,7 @@ const InvoicesSection = () => {
       <CreateInvoiceDialog 
         open={createDialogOpen} 
         onOpenChange={setCreateDialogOpen}
-        onInvoiceCreated={() => refetch()}
+        onInvoiceCreated={() => loadInvoices()}
       />
     </>
   );
