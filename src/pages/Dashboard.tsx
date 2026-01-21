@@ -8,6 +8,7 @@ import PythPriceFeed from "@/components/dashboard/PythPriceFeed";
 import MUSDInfo from "@/components/dashboard/MUSDInfo";
 import MUSDRewards from "@/components/dashboard/MUSDRewards";
 import FAQ from "@/components/dashboard/FAQ";
+import InvoicesSection from "@/components/dashboard/InvoicesSection";
 import NetworkStatus from "@/components/NetworkStatus";
 import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
@@ -145,7 +146,9 @@ const Dashboard = () => {
                 savingsBalance={savingsBalance}
                 onSavingsAdded={handleSavingsAdded}
               />
-              {/* MUSD Rewards - below savings account */}
+              {/* Invoices Section - after savings */}
+              <InvoicesSection />
+              {/* MUSD Rewards - below invoices */}
               <MUSDRewards />
             </div>
           </div>
