@@ -2,7 +2,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { 
-  FileText, 
+  Receipt, 
   Plus, 
   Clock, 
   CheckCircle2, 
@@ -13,21 +13,27 @@ import {
   Filter,
   ArrowUpDown,
   MoreHorizontal,
-  AlertCircle
+  AlertCircle,
+  Home,
+  Laptop,
+  Zap
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useAccount } from "wagmi";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Input } from "@/components/ui/input";
 import { format, formatDistanceToNow, isAfter, addDays } from "date-fns";
-import CreateInvoiceDialog from "./CreateInvoiceDialog";
+import CreateBillDialog from "./CreateBillDialog";
 import { toast } from "sonner";
 
-interface Invoice {
+export type BillType = 'rent' | 'saas' | 'utilities';
+
+interface Bill {
   id?: string;
-  invoice_id: string;
-  client_name: string;
+  bill_id: string;
+  payee_name: string;
   description: string;
+  bill_type: BillType;
   amount_usd: number;
   amount_musd: number;
   status: string;
@@ -37,14 +43,41 @@ interface Invoice {
   amount_paid?: number;
 }
 
-// Demo invoices for display
-const demoInvoices: Invoice[] = [
+const getBillTypeIcon = (type: BillType) => {
+  switch (type) {
+    case 'rent':
+      return <Home className="w-4 h-4" />;
+    case 'saas':
+      return <Laptop className="w-4 h-4" />;
+    case 'utilities':
+      return <Zap className="w-4 h-4" />;
+    default:
+      return <Receipt className="w-4 h-4" />;
+  }
+};
+
+const getBillTypeLabel = (type: BillType) => {
+  switch (type) {
+    case 'rent':
+      return 'Monthly Rent';
+    case 'saas':
+      return 'SaaS';
+    case 'utilities':
+      return 'Utilities';
+    default:
+      return type;
+  }
+};
+
+// Demo bills for display
+const demoBills: Bill[] = [
   {
-    invoice_id: "#24112",
-    client_name: "Anna Svensson",
-    description: "Design Services",
-    amount_usd: 6400,
-    amount_musd: 6400,
+    bill_id: "#BP24112",
+    payee_name: "Urban Living Apartments",
+    description: "January 2025 Rent",
+    bill_type: "rent",
+    amount_usd: 2400,
+    amount_musd: 2400,
     status: "overdue",
     due_date: "2024-12-01",
     created_at: "2024-12-12T10:00:00Z",
@@ -52,128 +85,134 @@ const demoInvoices: Invoice[] = [
     amount_paid: 0,
   },
   {
-    invoice_id: "#24113",
-    client_name: "Lars Müller",
-    description: "Web Development",
-    amount_usd: 8200,
-    amount_musd: 8200,
+    bill_id: "#BP24113",
+    payee_name: "Notion",
+    description: "Team Pro Plan - Annual",
+    bill_type: "saas",
+    amount_usd: 480,
+    amount_musd: 480,
     status: "paid",
     due_date: "2024-12-02",
     created_at: "2024-12-02T10:00:00Z",
     creator_address: "",
-    amount_paid: 2350,
+    amount_paid: 480,
   },
   {
-    invoice_id: "#24114",
-    client_name: "Marie Dubois",
-    description: "Consulting",
-    amount_usd: 12800,
-    amount_musd: 12800,
+    bill_id: "#BP24114",
+    payee_name: "City Power & Light",
+    description: "December Electricity Bill",
+    bill_type: "utilities",
+    amount_usd: 185,
+    amount_musd: 185,
     status: "paid",
     due_date: "2024-11-23",
     created_at: "2024-11-23T10:00:00Z",
     creator_address: "",
-    amount_paid: 7200,
+    amount_paid: 185,
   },
   {
-    invoice_id: "#24115",
-    client_name: "Thomas Schmidt",
-    description: "Marketing Campaign",
-    amount_usd: 6400,
-    amount_musd: 6400,
+    bill_id: "#BP24115",
+    payee_name: "Figma",
+    description: "Professional Plan",
+    bill_type: "saas",
+    amount_usd: 144,
+    amount_musd: 144,
     status: "paid",
     due_date: "2024-11-14",
     created_at: "2024-11-14T10:00:00Z",
     creator_address: "",
-    amount_paid: 6400,
+    amount_paid: 144,
   },
   {
-    invoice_id: "#24116",
-    client_name: "Emily Johnson",
-    description: "UI/UX Design",
-    amount_usd: 9150,
-    amount_musd: 9150,
+    bill_id: "#BP24116",
+    payee_name: "Natural Gas Co.",
+    description: "November Gas Bill",
+    bill_type: "utilities",
+    amount_usd: 95,
+    amount_musd: 95,
     status: "paid",
     due_date: "2024-11-07",
     created_at: "2024-11-07T10:00:00Z",
     creator_address: "",
-    amount_paid: 500,
+    amount_paid: 95,
   },
   {
-    invoice_id: "#24117",
-    client_name: "William Smith",
-    description: "App Development",
-    amount_usd: 6400,
-    amount_musd: 6400,
+    bill_id: "#BP24117",
+    payee_name: "Sunset Properties",
+    description: "December 2024 Rent",
+    bill_type: "rent",
+    amount_usd: 1800,
+    amount_musd: 1800,
     status: "paid",
     due_date: "2024-10-21",
     created_at: "2024-10-21T10:00:00Z",
     creator_address: "",
-    amount_paid: 2000,
+    amount_paid: 1800,
   },
   {
-    invoice_id: "#24118",
-    client_name: "Sophie Martin",
-    description: "Brand Strategy",
-    amount_usd: 8550,
-    amount_musd: 8550,
+    bill_id: "#BP24118",
+    payee_name: "AWS",
+    description: "Cloud Services - Q4",
+    bill_type: "saas",
+    amount_usd: 320,
+    amount_musd: 320,
     status: "draft",
     due_date: "2024-10-19",
     created_at: "2024-10-19T10:00:00Z",
     creator_address: "",
-    amount_paid: 950,
+    amount_paid: 0,
   },
 ];
 
-const InvoicesSection = () => {
+const BillPaySection = () => {
   const { address } = useAccount();
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
-  const [invoices, setInvoices] = useState<Invoice[]>([]);
+  const [bills, setBills] = useState<Bill[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
   const [lastUpdate, setLastUpdate] = useState(new Date());
 
-  const loadInvoices = () => {
+  const loadBills = () => {
     if (!address) {
-      setInvoices(demoInvoices);
+      setBills(demoBills);
       setIsLoading(false);
       return;
     }
 
     // Load from localStorage temporarily (until database table is created)
-    const storedInvoices = JSON.parse(localStorage.getItem('invoices') || '[]');
-    const userInvoices = storedInvoices.filter(
-      (inv: Invoice) => inv.creator_address === address.toLowerCase()
+    const storedBills = JSON.parse(localStorage.getItem('bills') || '[]');
+    const userBills = storedBills.filter(
+      (bill: Bill) => bill.creator_address === address.toLowerCase()
     );
     
-    // Combine user invoices with demo invoices for display
-    const allInvoices = [...userInvoices, ...demoInvoices];
-    setInvoices(allInvoices);
+    // Combine user bills with demo bills for display
+    const allBills = [...userBills, ...demoBills];
+    setBills(allBills);
     setIsLoading(false);
     setLastUpdate(new Date());
   };
 
   useEffect(() => {
-    loadInvoices();
+    loadBills();
   }, [address]);
 
   // Calculate summary stats
-  const overdueAmount = invoices
-    .filter(inv => inv.status === 'overdue')
-    .reduce((sum, inv) => sum + inv.amount_musd, 0);
+  const overdueAmount = bills
+    .filter(bill => bill.status === 'overdue')
+    .reduce((sum, bill) => sum + bill.amount_musd, 0);
   
-  const dueNext30Days = invoices
-    .filter(inv => {
-      if (!inv.due_date || inv.status === 'paid') return false;
-      const dueDate = new Date(inv.due_date);
+  const dueNext30Days = bills
+    .filter(bill => {
+      if (!bill.due_date || bill.status === 'paid') return false;
+      const dueDate = new Date(bill.due_date);
       const in30Days = addDays(new Date(), 30);
       return isAfter(dueDate, new Date()) && !isAfter(dueDate, in30Days);
     })
-    .reduce((sum, inv) => sum + inv.amount_musd, 0);
+    .reduce((sum, bill) => sum + bill.amount_musd, 0);
 
-  const upcomingPayout = invoices
-    .filter(inv => inv.status === 'paid')
-    .reduce((sum, inv) => sum + (inv.amount_paid || 0), 0);
+  const totalPaid = bills
+    .filter(bill => bill.status === 'paid')
+    .reduce((sum, bill) => sum + (bill.amount_paid || 0), 0);
 
   const getStatusBadge = (status: string) => {
     switch (status) {
@@ -194,7 +233,7 @@ const InvoicesSection = () => {
       case 'draft':
         return (
           <Badge className="bg-gray-500/10 text-gray-400 border-gray-500/20 gap-1">
-            <FileText className="w-3 h-3" />
+            <Receipt className="w-3 h-3" />
             Draft
           </Badge>
         );
@@ -215,15 +254,31 @@ const InvoicesSection = () => {
     }
   };
 
+  const getBillTypeBadge = (type: BillType) => {
+    const colors = {
+      rent: "bg-blue-500/10 text-blue-500 border-blue-500/20",
+      saas: "bg-purple-500/10 text-purple-500 border-purple-500/20",
+      utilities: "bg-orange-500/10 text-orange-500 border-orange-500/20",
+    };
+    
+    return (
+      <Badge className={`${colors[type]} gap-1`}>
+        {getBillTypeIcon(type)}
+        {getBillTypeLabel(type)}
+      </Badge>
+    );
+  };
+
   const exportToCSV = () => {
-    const headers = ["Invoice Number", "Customer", "Total (MUSD)", "Status", "Amount Due (MUSD)", "Date"];
-    const rows = invoices.map(inv => [
-      inv.invoice_id,
-      inv.client_name,
-      inv.amount_musd.toFixed(2),
-      inv.status,
-      (inv.amount_musd - (inv.amount_paid || 0)).toFixed(2),
-      inv.due_date || ''
+    const headers = ["Bill Number", "Payee", "Type", "Total (MUSD)", "Status", "Amount Due (MUSD)", "Date"];
+    const rows = bills.map(bill => [
+      bill.bill_id,
+      bill.payee_name,
+      getBillTypeLabel(bill.bill_type),
+      bill.amount_musd.toFixed(2),
+      bill.status,
+      (bill.amount_musd - (bill.amount_paid || 0)).toFixed(2),
+      bill.due_date || ''
     ]);
     
     const csvContent = [headers, ...rows].map(row => row.join(",")).join("\n");
@@ -231,14 +286,15 @@ const InvoicesSection = () => {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = "invoices.csv";
+    a.download = "bills.csv";
     a.click();
-    toast.success("Invoices exported successfully!");
+    toast.success("Bills exported successfully!");
   };
 
-  const filteredInvoices = invoices.filter(inv => 
-    inv.client_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    inv.invoice_id.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredBills = bills.filter(bill => 
+    bill.payee_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    bill.bill_id.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    bill.bill_type.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
   if (!address) {
@@ -246,7 +302,7 @@ const InvoicesSection = () => {
       <Card>
         <CardContent className="p-6">
           <div className="text-center py-8">
-            <p className="text-muted-foreground">Connect your wallet to create invoices</p>
+            <p className="text-muted-foreground">Connect your wallet to pay bills</p>
           </div>
         </CardContent>
       </Card>
@@ -261,16 +317,16 @@ const InvoicesSection = () => {
           <div className="p-6 border-b border-border/50">
             <div className="flex flex-col items-center gap-4 mb-6">
               <div className="text-center">
-                <h3 className="text-xl font-bold">Invoices</h3>
+                <h3 className="text-xl font-bold">Bill Pay</h3>
                 <p className="text-xs text-muted-foreground flex items-center justify-center gap-1 mt-1">
                   Last update {formatDistanceToNow(lastUpdate, { addSuffix: true })}
-                  <RefreshCw className="w-3 h-3 cursor-pointer hover:text-accent" onClick={loadInvoices} />
+                  <RefreshCw className="w-3 h-3 cursor-pointer hover:text-accent" onClick={loadBills} />
                 </p>
               </div>
               <div className="flex gap-2">
                 <Button variant="hero" size="sm" onClick={() => setCreateDialogOpen(true)}>
                   <Plus className="w-4 h-4 mr-2" />
-                  Create Invoice
+                  Add Bill
                 </Button>
                 <Button variant="outline" size="sm" onClick={exportToCSV}>
                   <Download className="w-4 h-4 mr-2" />
@@ -296,16 +352,16 @@ const InvoicesSection = () => {
                 </p>
               </div>
               <div className="text-center p-4 rounded-lg bg-background/50">
-                <p className="text-xs text-muted-foreground mb-1">Average time to get paid</p>
+                <p className="text-xs text-muted-foreground mb-1">Average time to pay</p>
                 <p className="text-xl md:text-2xl font-bold">
-                  <span>34</span>
+                  <span>5</span>
                   <span className="text-sm text-muted-foreground ml-1">days</span>
                 </p>
               </div>
               <div className="text-center p-4 rounded-lg bg-background/50">
-                <p className="text-xs text-muted-foreground mb-1">Upcoming Payout</p>
+                <p className="text-xs text-muted-foreground mb-1">Total Paid</p>
                 <p className="text-xl md:text-2xl font-bold text-green-500">
-                  <span>{upcomingPayout.toLocaleString()}</span>
+                  <span>{totalPaid.toLocaleString()}</span>
                   <span className="text-sm text-muted-foreground ml-1">MUSD</span>
                 </p>
               </div>
@@ -324,7 +380,7 @@ const InvoicesSection = () => {
                 <ArrowUpDown className="w-3.5 h-3.5" />
                 Sort Order
               </Button>
-              <Badge variant="outline" className="text-xs">Total: &gt;1000</Badge>
+              <Badge variant="outline" className="text-xs">Total: &gt;100</Badge>
               <Badge variant="outline" className="text-xs">Date: Last 6 months</Badge>
             </div>
             <div className="relative">
@@ -338,7 +394,7 @@ const InvoicesSection = () => {
             </div>
           </div>
 
-          {/* Invoice Table */}
+          {/* Bill Table */}
           {isLoading ? (
             <div className="p-6 space-y-4">
               {[1, 2, 3].map((i) => (
@@ -346,6 +402,7 @@ const InvoicesSection = () => {
                   <Skeleton className="w-4 h-4" />
                   <Skeleton className="h-4 w-20" />
                   <Skeleton className="h-4 w-32" />
+                  <Skeleton className="h-5 w-20" />
                   <Skeleton className="h-4 w-16" />
                   <Skeleton className="h-5 w-16" />
                   <Skeleton className="h-4 w-16" />
@@ -361,50 +418,55 @@ const InvoicesSection = () => {
                     <th className="p-4 text-left w-8">
                       <input type="checkbox" className="rounded border-border" />
                     </th>
-                    <th className="p-4 text-left font-medium">Invoice Number</th>
-                    <th className="p-4 text-left font-medium">Customer</th>
+                    <th className="p-4 text-left font-medium">Bill Number</th>
+                    <th className="p-4 text-left font-medium">Payee</th>
+                    <th className="p-4 text-left font-medium">Type</th>
                     <th className="p-4 text-left font-medium">Total</th>
                     <th className="p-4 text-left font-medium">Status</th>
                     <th className="p-4 text-left font-medium">Amount Due</th>
-                    <th className="p-4 text-left font-medium">Date</th>
+                    <th className="p-4 text-left font-medium">Due Date</th>
                     <th className="p-4 text-left font-medium w-8"></th>
                   </tr>
                 </thead>
                 <tbody>
-                  {filteredInvoices.length > 0 ? (
-                    filteredInvoices.map((invoice, index) => {
-                      const amountDue = invoice.amount_musd - (invoice.amount_paid || 0);
-                      const dateStr = invoice.due_date 
-                        ? format(new Date(invoice.due_date), "MMM d, yyyy")
+                  {filteredBills.length > 0 ? (
+                    filteredBills.map((bill, index) => {
+                      const amountDue = bill.amount_musd - (bill.amount_paid || 0);
+                      const dateStr = bill.due_date 
+                        ? format(new Date(bill.due_date), "MMM d, yyyy")
                         : "-";
                       
                       return (
                         <tr 
-                          key={invoice.invoice_id + index} 
+                          key={bill.bill_id + index} 
                           className="border-b border-border/30 hover:bg-secondary/30 transition-colors"
                         >
                           <td className="p-4">
                             <input 
                               type="checkbox" 
                               className="rounded border-border"
-                              defaultChecked={invoice.status === 'paid' || invoice.status === 'draft'}
+                              defaultChecked={bill.status === 'paid'}
                             />
                           </td>
                           <td className="p-4">
                             <span className="font-mono text-sm text-accent">
-                              {invoice.invoice_id}
+                              {bill.bill_id}
                             </span>
                           </td>
                           <td className="p-4">
-                            <span className="font-medium">{invoice.client_name}</span>
+                            <span className="font-medium">{bill.payee_name}</span>
+                            <p className="text-xs text-muted-foreground">{bill.description}</p>
+                          </td>
+                          <td className="p-4">
+                            {getBillTypeBadge(bill.bill_type)}
                           </td>
                           <td className="p-4">
                             <span className="font-semibold">
-                              {invoice.amount_musd.toLocaleString()} MUSD
+                              {bill.amount_musd.toLocaleString()} MUSD
                             </span>
                           </td>
                           <td className="p-4">
-                            {getStatusBadge(invoice.status)}
+                            {getStatusBadge(bill.status)}
                           </td>
                           <td className="p-4">
                             <span className={amountDue === 0 ? "text-muted-foreground" : ""}>
@@ -424,9 +486,9 @@ const InvoicesSection = () => {
                     })
                   ) : (
                     <tr>
-                      <td colSpan={8} className="p-8 text-center">
-                        <FileText className="w-12 h-12 mx-auto text-muted-foreground/50 mb-3" />
-                        <p className="text-muted-foreground">No invoices found</p>
+                      <td colSpan={9} className="p-8 text-center">
+                        <Receipt className="w-12 h-12 mx-auto text-muted-foreground/50 mb-3" />
+                        <p className="text-muted-foreground">No bills found</p>
                         <Button 
                           variant="hero" 
                           size="sm" 
@@ -434,7 +496,7 @@ const InvoicesSection = () => {
                           className="mt-4"
                         >
                           <Plus className="w-4 h-4 mr-2" />
-                          Create Invoice
+                          Add Bill
                         </Button>
                       </td>
                     </tr>
@@ -446,13 +508,13 @@ const InvoicesSection = () => {
         </CardContent>
       </Card>
 
-      <CreateInvoiceDialog 
+      <CreateBillDialog 
         open={createDialogOpen} 
         onOpenChange={setCreateDialogOpen}
-        onInvoiceCreated={() => loadInvoices()}
+        onBillCreated={() => loadBills()}
       />
     </>
   );
 };
 
-export default InvoicesSection;
+export default BillPaySection;

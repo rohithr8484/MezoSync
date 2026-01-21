@@ -8,7 +8,7 @@ import PythPriceFeed from "@/components/dashboard/PythPriceFeed";
 import MUSDInfo from "@/components/dashboard/MUSDInfo";
 import MUSDRewards from "@/components/dashboard/MUSDRewards";
 import FAQ from "@/components/dashboard/FAQ";
-import InvoicesSection from "@/components/dashboard/InvoicesSection";
+import BillPaySection from "@/components/dashboard/BillPaySection";
 import NetworkStatus from "@/components/NetworkStatus";
 import LiveMUSDBalance from "@/components/dashboard/LiveMUSDBalance";
 import { useAccount } from "wagmi";
@@ -149,9 +149,9 @@ const Dashboard = () => {
                 savingsBalance={savingsBalance}
                 onSavingsAdded={handleSavingsAdded}
               />
-              {/* Invoices Section - after savings */}
-              <InvoicesSection />
-              {/* MUSD Rewards - below invoices */}
+              {/* Bill Pay Section - after savings */}
+              <BillPaySection />
+              {/* MUSD Rewards - below bill pay */}
               <MUSDRewards />
             </div>
           </div>
