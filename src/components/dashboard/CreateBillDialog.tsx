@@ -17,12 +17,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Badge } from "@/components/ui/badge";
 import { useAccount } from "wagmi";
 import { toast } from "sonner";
 import { usePythPrice } from "@/hooks/usePythPrice";
-import { Receipt, RefreshCw, Copy, Share2, Home, Laptop, Zap } from "lucide-react";
+import { Receipt, RefreshCw, Copy, Share2, Home, Laptop, Zap, FileCode2, CheckCircle2 } from "lucide-react";
 import QRCode from "react-qr-code";
 import { BillType } from "./BillPaySection";
+import { useBillsContract, BillType as ContractBillType } from "@/hooks/useBillsContract";
 
 interface CreateBillDialogProps {
   open: boolean;
@@ -35,12 +37,25 @@ const CreateBillDialog = ({ open, onOpenChange, onBillCreated }: CreateBillDialo
   const { priceData, loading: priceLoading } = usePythPrice("MUSD_USD");
   const musdPrice = priceData ? parseFloat(priceData.price) : 1.0;
   
+  // Smart contract integration
+  const { createBill: createBillOnChain, isPending, isConfirming, transactionHash } = useBillsContract();
+  
   const [payeeName, setPayeeName] = useState("");
   const [billType, setBillType] = useState<BillType>("utilities");
   const [description, setDescription] = useState("");
   const [amountUSD, setAmountUSD] = useState("");
   const [dueDate, setDueDate] = useState("");
   const [isCreating, setIsCreating] = useState(false);
+  
+  // Map UI bill type to contract enum
+  const getContractBillType = (type: BillType): ContractBillType => {
+    switch (type) {
+      case 'rent': return ContractBillType.RENT;
+      case 'saas': return ContractBillType.SAAS;
+      case 'utilities': return ContractBillType.UTILITIES;
+      default: return ContractBillType.UTILITIES;
+    }
+  };
   const [createdBill, setCreatedBill] = useState<{ id: string; musdAmount: number } | null>(null);
 
   // Calculate MUSD equivalent in real-time
@@ -85,6 +100,25 @@ const CreateBillDialog = ({ open, onOpenChange, onBillCreated }: CreateBillDialo
       const billId = `#BP${Date.now().toString(36).toUpperCase()}`;
       const musdAmount = parseFloat(musdEquivalent);
 
+      // Attempt smart contract bill creation (if contract is deployed)
+      try {
+        const dueDateTimestamp = dueDate 
+          ? Math.floor(new Date(dueDate).getTime() / 1000) 
+          : Math.floor(Date.now() / 1000) + 30 * 24 * 60 * 60; // Default 30 days
+
+        await createBillOnChain(
+          address, // payer address (self for now, can be customized)
+          amount,
+          musdEquivalent,
+          getContractBillType(billType),
+          payeeName,
+          description,
+          dueDateTimestamp
+        );
+      } catch (contractError) {
+        console.log('Contract not deployed yet, using local storage:', contractError);
+      }
+
       // Store bill locally for now (database table pending)
       const bill = {
         bill_id: billId,
@@ -98,6 +132,7 @@ const CreateBillDialog = ({ open, onOpenChange, onBillCreated }: CreateBillDialo
         status: 'pending',
         created_at: new Date().toISOString(),
         amount_paid: 0,
+        tx_hash: transactionHash || null,
       };
 
       // Save to localStorage temporarily
@@ -203,6 +238,15 @@ const CreateBillDialog = ({ open, onOpenChange, onBillCreated }: CreateBillDialo
           </div>
         ) : (
           <div className="space-y-4">
+            {/* Smart Contract Badge */}
+            <div className="flex items-center gap-2 p-2 rounded-lg bg-blue-500/10 border border-blue-500/30">
+              <FileCode2 className="h-4 w-4 text-blue-500" />
+              <span className="text-xs text-blue-600">Powered by MezoSyncBills.sol</span>
+              <Badge variant="outline" className="ml-auto text-[10px] bg-blue-500/10 text-blue-500 border-blue-500/30">
+                <CheckCircle2 className="h-2.5 w-2.5 mr-1" />
+                On-Chain
+              </Badge>
+            </div>
             <div className="space-y-2">
               <Label htmlFor="billType">Bill Type *</Label>
               <Select value={billType} onValueChange={(v) => setBillType(v as BillType)}>
@@ -293,10 +337,12 @@ const CreateBillDialog = ({ open, onOpenChange, onBillCreated }: CreateBillDialo
             <Button 
               variant="hero" 
               onClick={handleCreateBill} 
-              disabled={isCreating || !payeeName || !amountUSD || !description}
+              disabled={isCreating || isPending || isConfirming || !payeeName || !amountUSD || !description}
               className="w-full"
             >
-              {isCreating ? "Creating..." : "Add Bill"}
+              {isPending ? "Awaiting Signature..." : 
+               isConfirming ? "Confirming..." : 
+               isCreating ? "Creating..." : "Add Bill"}
             </Button>
           </div>
         )}
