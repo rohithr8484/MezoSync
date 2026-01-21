@@ -12,7 +12,6 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { useAccount } from "wagmi";
 import { toast } from "sonner";
-import { supabase } from "@/integrations/supabase/client";
 import { usePythPrice } from "@/hooks/usePythPrice";
 import { FileText, RefreshCw, Copy, Share2 } from "lucide-react";
 import QRCode from "react-qr-code";
@@ -25,7 +24,8 @@ interface CreateInvoiceDialogProps {
 
 const CreateInvoiceDialog = ({ open, onOpenChange, onInvoiceCreated }: CreateInvoiceDialogProps) => {
   const { address } = useAccount();
-  const { price: musdPrice, isLoading: priceLoading } = usePythPrice("MUSD_USD");
+  const { priceData, loading: priceLoading } = usePythPrice("MUSD_USD");
+  const musdPrice = priceData ? parseFloat(priceData.price) : 1.0;
   
   const [clientName, setClientName] = useState("");
   const [clientEmail, setClientEmail] = useState("");
@@ -77,21 +77,24 @@ const CreateInvoiceDialog = ({ open, onOpenChange, onInvoiceCreated }: CreateInv
       const invoiceId = `INV-${Date.now().toString(36).toUpperCase()}`;
       const musdAmount = parseFloat(musdEquivalent);
 
-      const { error } = await supabase
-        .from('invoices')
-        .insert({
-          invoice_id: invoiceId,
-          creator_address: address.toLowerCase(),
-          client_name: clientName,
-          client_email: clientEmail || null,
-          description,
-          amount_usd: amount,
-          amount_musd: musdAmount,
-          due_date: dueDate || null,
-          status: 'pending',
-        });
+      // Store invoice locally for now (database table pending)
+      const invoice = {
+        invoice_id: invoiceId,
+        creator_address: address.toLowerCase(),
+        client_name: clientName,
+        client_email: clientEmail || null,
+        description,
+        amount_usd: amount,
+        amount_musd: musdAmount,
+        due_date: dueDate || null,
+        status: 'pending',
+        created_at: new Date().toISOString(),
+      };
 
-      if (error) throw error;
+      // Save to localStorage temporarily
+      const existingInvoices = JSON.parse(localStorage.getItem('invoices') || '[]');
+      existingInvoices.push(invoice);
+      localStorage.setItem('invoices', JSON.stringify(existingInvoices));
 
       setCreatedInvoice({ id: invoiceId, musdAmount });
       toast.success("Invoice created successfully!");
