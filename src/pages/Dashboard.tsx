@@ -131,13 +131,13 @@ const Dashboard = () => {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 sm:gap-6">
             <div className="lg:col-span-2 space-y-4 sm:space-y-6">
               <PythPriceFeed />
+              {/* Network Status - above quick actions */}
+              <NetworkStatus />
               <QuickActions 
                 currentSavings={savingsBalance}
                 onSavingsAdded={handleSavingsAdded}
               />
               <RecentTransactions />
-              {/* MUSD Rewards Section - below recent activity */}
-              <MUSDRewards />
             </div>
             
             <div className="space-y-4 sm:space-y-6">
@@ -145,8 +145,8 @@ const Dashboard = () => {
                 savingsBalance={savingsBalance}
                 onSavingsAdded={handleSavingsAdded}
               />
-              {/* Network Status - below savings account */}
-              <NetworkStatus />
+              {/* MUSD Rewards - below savings account */}
+              <MUSDRewards />
             </div>
           </div>
 
