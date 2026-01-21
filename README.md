@@ -61,6 +61,15 @@ Send money across borders without the high fees. Best exchange rates, guaranteed
 <img width="466" height="818" alt="image" src="https://github.com/user-attachments/assets/af9cdfc5-f303-4bcc-9523-88f75854618e" />
 
 
+## ENV Variables
+
+VITE_SUPABASE_PROJECT_ID=""
+VITE_SUPABASE_PUBLISHABLE_KEY=""
+VITE_SUPABASE_URL=""
+VITE_WALLETCONNECT_PROJECT_ID="
+VITE_VALIDATION_CLOUD_RPC_URL=""
+VITE_PYTH_PRICE_SERVICE_URL="""
+
 
 ## 🚀 Quick Start
 
@@ -105,6 +114,8 @@ npm run lint
 
 ## 1. Pyth Network Oracle
 
+**Pyth Price Service:** https://hermes.pyth.network
+
 **Contract Address:**  
 `0x2880aB155794e7179c9eE2e38200202908C17B43`  
 *(Mainnet & Testnet)*
@@ -135,6 +146,10 @@ Provides real-time price feeds for crypto assets.
 
 **Block Explorer:**  
 [https://explorer.mezo.org](https://explorer.mezo.org)
+
+
+## 3. Validation Cloud
+**RPC URL :** https://mainnet.mezo.validationcloud.io/v1/bAhV9XJtsdARW9zbkmH_F0sUiVtbDlLry6plga8Xw1M
 
 ## Usage
 
