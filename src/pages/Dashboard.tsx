@@ -10,6 +10,7 @@ import MUSDRewards from "@/components/dashboard/MUSDRewards";
 import FAQ from "@/components/dashboard/FAQ";
 import InvoicesSection from "@/components/dashboard/InvoicesSection";
 import NetworkStatus from "@/components/NetworkStatus";
+import LiveMUSDBalance from "@/components/dashboard/LiveMUSDBalance";
 import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -134,6 +135,8 @@ const Dashboard = () => {
               <PythPriceFeed />
               {/* Network Status - above quick actions */}
               <NetworkStatus />
+              {/* Live MUSD Balance - above quick actions */}
+              <LiveMUSDBalance savingsBalance={savingsBalance} />
               <QuickActions 
                 currentSavings={savingsBalance}
                 onSavingsAdded={handleSavingsAdded}
