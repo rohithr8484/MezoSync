@@ -92,6 +92,29 @@ VITE_PYTH_PRICE_SERVICE_URL="""
 ```
 
 
+
+
+## Solidity contracts
+
+```bash
+
+cd \MezoSync
+
+# 1. Install dependencies
+npm install
+npm install --save-dev @nomicfoundation/hardhat-ethers ethers dotenv
+
+# 2. Create environment file
+echo PRIVATE_KEY=0xYOUR_PRIVATE_KEY_HERE > .env
+
+# 3. Compile contracts
+npx hardhat compile
+
+# 4. Deploy to Mezo
+npx hardhat run scripts/deploy.ts --network mezo
+
+```
+
 ## 🚀 Quick Start
 
 ### Installation
