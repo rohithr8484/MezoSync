@@ -98,7 +98,7 @@ VITE_PYTH_PRICE_SERVICE_URL="""
 
 ```bash
 
-cd \MezoSync
+cd MezoSync
 
 # 1. Install dependencies
 npm install
