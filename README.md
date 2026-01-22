@@ -18,6 +18,11 @@ Enables instant, zero-fee MUSD transfers for everyday use cases such as bill spl
 Seamlessly combines daily payments with passive savings growth in a single experience.
 
 Bank-like simplicity, on-chain transparency
+
+<p align="left"> <img src="https://img.shields.io/badge/Creative-Frontend-pink?style=flat-square" /> <img src="https://img.shields.io/badge/Data-yellow?style=flat-square" /> <img src="https://img.shields.io/badge/Encode Club-blue?style=flat-square" /> </p>
+<img width="400" height="400" alt="github_avatar_400x400" src="https://github.com/user-attachments/assets/bdd2f016-731d-49a3-83ae-33e78df0f470" />
+
+
 ## 🚀 Features
 
 ### 💰 Smart Savings
