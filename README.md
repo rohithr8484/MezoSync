@@ -27,7 +27,7 @@ Put your money to work with high-yield savings accounts. Watch your balance grow
 - **MUSD stablecoin**
 
 ### 📤 Send & Request
-Send money to anyone instantly. Split bills, pay friends, or send money home - all in seconds.
+Send MUSD to anyone instantly. Split bills, pay friends, or send money home - all in seconds.
 - **Zero fees**
 - **Instant delivery**
 - **Request payments**
