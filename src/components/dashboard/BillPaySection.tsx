@@ -311,58 +311,70 @@ const BillPaySection = () => {
 
   return (
     <>
-      <Card className="overflow-hidden">
+      <Card className="overflow-hidden bg-card border border-border/50 shadow-sm">
         <CardContent className="p-0">
           {/* Header */}
-          <div className="p-6 border-b border-border/50">
-            <div className="flex flex-col items-center gap-4 mb-6">
+          <div className="p-6 pb-4">
+            <div className="flex flex-col items-center gap-3 mb-6">
               <div className="text-center">
-                <h3 className="text-xl font-bold">Bill Pay</h3>
-                <p className="text-xs text-muted-foreground flex items-center justify-center gap-1 mt-1">
+                <h3 className="text-xl font-bold text-foreground">Bill Pay</h3>
+                <p className="text-xs text-muted-foreground flex items-center justify-center gap-1.5 mt-1">
                   Last update {formatDistanceToNow(lastUpdate, { addSuffix: true })}
-                  <RefreshCw className="w-3 h-3 cursor-pointer hover:text-accent" onClick={loadBills} />
+                  <RefreshCw 
+                    className="w-3 h-3 cursor-pointer hover:text-accent transition-colors" 
+                    onClick={loadBills} 
+                  />
                 </p>
               </div>
-              <div className="flex gap-2">
-                <Button variant="hero" size="sm" onClick={() => setCreateDialogOpen(true)}>
-                  <Plus className="w-4 h-4 mr-2" />
+              <div className="flex gap-3">
+                <Button 
+                  className="bg-[#FF6B35] hover:bg-[#FF6B35]/90 text-white font-medium px-4 shadow-sm"
+                  size="sm" 
+                  onClick={() => setCreateDialogOpen(true)}
+                >
+                  <Plus className="w-4 h-4 mr-1.5" />
                   Add Bill
                 </Button>
-                <Button variant="outline" size="sm" onClick={exportToCSV}>
-                  <Download className="w-4 h-4 mr-2" />
+                <Button 
+                  variant="outline" 
+                  size="sm" 
+                  onClick={exportToCSV}
+                  className="border-border/60 text-foreground hover:bg-secondary/50 font-medium"
+                >
+                  <Download className="w-4 h-4 mr-1.5" />
                   Export as .CSV
                 </Button>
               </div>
             </div>
 
             {/* Summary Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div className="text-center p-4 rounded-lg bg-background/50">
-                <p className="text-xs text-muted-foreground mb-1">Overdue</p>
-                <p className="text-xl md:text-2xl font-bold">
-                  <span className="text-red-500">{overdueAmount.toLocaleString()}</span>
-                  <span className="text-sm text-muted-foreground ml-1">MUSD</span>
+            <div className="grid grid-cols-4 gap-2 border-t border-border/30 pt-4">
+              <div className="text-center py-2">
+                <p className="text-[11px] text-muted-foreground mb-1 leading-tight">Overdue</p>
+                <p className="text-lg font-bold text-[#FF6B35]">
+                  {overdueAmount.toLocaleString()}
+                  <span className="text-[10px] font-medium text-muted-foreground ml-0.5">MUSD</span>
                 </p>
               </div>
-              <div className="text-center p-4 rounded-lg bg-background/50">
-                <p className="text-xs text-muted-foreground mb-1">Due within next 30 days</p>
-                <p className="text-xl md:text-2xl font-bold">
-                  <span>{dueNext30Days.toLocaleString()}</span>
-                  <span className="text-sm text-muted-foreground ml-1">MUSD</span>
+              <div className="text-center py-2 border-l border-border/30">
+                <p className="text-[11px] text-muted-foreground mb-1 leading-tight">Due within<br />next 30 days</p>
+                <p className="text-lg font-bold text-foreground">
+                  {dueNext30Days.toLocaleString()}
+                  <span className="text-[10px] font-medium text-muted-foreground ml-0.5">MUSD</span>
                 </p>
               </div>
-              <div className="text-center p-4 rounded-lg bg-background/50">
-                <p className="text-xs text-muted-foreground mb-1">Average time to pay</p>
-                <p className="text-xl md:text-2xl font-bold">
-                  <span>5</span>
-                  <span className="text-sm text-muted-foreground ml-1">days</span>
+              <div className="text-center py-2 border-l border-border/30">
+                <p className="text-[11px] text-muted-foreground mb-1 leading-tight">Average<br />time to pay</p>
+                <p className="text-lg font-bold text-foreground">
+                  5
+                  <span className="text-[10px] font-medium text-muted-foreground ml-0.5">days</span>
                 </p>
               </div>
-              <div className="text-center p-4 rounded-lg bg-background/50">
-                <p className="text-xs text-muted-foreground mb-1">Total Paid</p>
-                <p className="text-xl md:text-2xl font-bold text-green-500">
-                  <span>{totalPaid.toLocaleString()}</span>
-                  <span className="text-sm text-muted-foreground ml-1">MUSD</span>
+              <div className="text-center py-2 border-l border-border/30">
+                <p className="text-[11px] text-muted-foreground mb-1 leading-tight">Total<br />Paid</p>
+                <p className="text-lg font-bold text-emerald-500">
+                  {totalPaid.toLocaleString()}
+                  <span className="text-[10px] font-medium text-muted-foreground ml-0.5">MUSD</span>
                 </p>
               </div>
             </div>
