@@ -142,15 +142,16 @@ const Dashboard = () => {
                 currentSavings={savingsBalance}
                 onSavingsAdded={handleSavingsAdded}
               />
-              <RecentTransactions />
-            </div>
-            
-            <div className="space-y-4 sm:space-y-6">
+              {/* Savings Account - below Quick Actions */}
               <SavingsOverview 
                 savingsBalance={savingsBalance}
                 onSavingsAdded={handleSavingsAdded}
               />
-              {/* Bill Pay Section - after savings */}
+              <RecentTransactions />
+            </div>
+            
+            <div className="space-y-4 sm:space-y-6">
+              {/* Bill Pay Section */}
               <BillPaySection />
               {/* MUSD Rewards - below bill pay */}
               <MUSDRewards />
