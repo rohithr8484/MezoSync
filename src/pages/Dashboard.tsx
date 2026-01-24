@@ -11,7 +11,7 @@ import FAQ from "@/components/dashboard/FAQ";
 import BillPaySection from "@/components/dashboard/BillPaySection";
 import NetworkStatus from "@/components/NetworkStatus";
 import LiveMUSDBalance from "@/components/dashboard/LiveMUSDBalance";
-import ContractStatus from "@/components/dashboard/ContractStatus";
+
 import { useAccount } from "wagmi";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
@@ -152,8 +152,6 @@ const Dashboard = () => {
               />
               {/* Bill Pay Section - after savings */}
               <BillPaySection />
-              {/* Smart Contracts Status */}
-              <ContractStatus />
               {/* MUSD Rewards - below bill pay */}
               <MUSDRewards />
             </div>
