@@ -26,13 +26,13 @@ Bank-like simplicity, on-chain transparency
 ## 🚀 Features
 
 ### 💰 Smart Savings
-Put your money to work with high-yield savings accounts. Watch your balance grow automatically.
+Put your MUSD to work with high-yield savings accounts. Watch your balance grow automatically.
 - **4.5% Annual Return**
 - **Withdraw anytime**
 - **MUSD stablecoin**
 
 ### 📤 Send & Request
-Send MUSD to anyone instantly. Split bills, pay friends, or send money home - all in seconds.
+Send MUSD to anyone instantly. Split bills, pay friends, or send MUSD home - all in seconds.
 - **Zero fees**
 - **Instant delivery**
 - **Request payments**
@@ -211,7 +211,7 @@ Our platform leverages the security and efficiency of:
 
 ## 💡 Core Principles
 
-- **Simplicity** - Manage your money without complexity
+- **Simplicity** - Manage your MUSD without complexity
 - **Accessibility** - Financial services for everyone
 - **Transparency** - Clear fees and operations
 - **Security** - Built on proven blockchain technology

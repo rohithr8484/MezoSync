@@ -17,8 +17,8 @@ const HowItWorks = () => {
     {
       number: 3,
       icon: Send,
-      title: "Send or Receive Money",
-      description: "Transfer money instantly with zero fees to anyone, anywhere"
+      title: "Send or Receive MUSD",
+      description: "Transfer MUSD instantly with zero fees to anyone, anywhere"
     },
     {
       number: 4,

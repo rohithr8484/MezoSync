@@ -8,17 +8,17 @@ const UseCases = () => {
     {
       image: savingsIllustration,
       title: "High-Yield Savings",
-      description: "Earn 4.5% APY on your MUSD savings with no minimum balance required. Your money works for you while staying accessible whenever you need it."
+      description: "Earn 4.5% APY on your MUSD savings with no minimum balance required. Your MUSD works for you while staying accessible whenever you need it."
     },
     {
       image: paymentsIllustration,
       title: "Instant Payments",
-      description: "Send money to friends, family, or businesses instantly with zero transaction fees. No delays, no hidden costs - just simple, fast payments."
+      description: "Send MUSD to friends, family, or businesses instantly with zero transaction fees. No delays, no hidden costs - just simple, fast payments."
     },
     {
       image: remittanceIllustration,
       title: "International Remittances",
-      description: "Send money globally without high fees or long wait times. Help your loved ones anywhere in the world with affordable, instant transfers."
+      description: "Send MUSD globally without high fees or long wait times. Help your loved ones anywhere in the world with affordable, instant transfers."
     }
   ];
 
