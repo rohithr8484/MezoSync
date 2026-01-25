@@ -74,7 +74,7 @@ const faqs = [
   // General
   {
     question: "Can I use this without crypto experience?",
-    answer: "Absolutely! MezoSync is designed for everyone. We've removed the crypto complexity so you can focus on managing your money, just like a traditional banking app but with better features and lower fees."
+    answer: "Absolutely! MezoSync is designed for everyone. We've removed the crypto complexity so you can focus on managing your MUSD, just like a traditional banking app but with better features and lower fees."
   },
   {
     question: "How do I export my data?",
