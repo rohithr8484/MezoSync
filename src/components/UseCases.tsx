@@ -1,20 +1,22 @@
-import { PiggyBank, Zap, Globe } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
+import savingsIllustration from "@/assets/savings-illustration.png";
+import paymentsIllustration from "@/assets/payments-illustration.png";
+import remittanceIllustration from "@/assets/remittance-illustration.png";
 
 const UseCases = () => {
   const useCases = [
     {
-      icon: PiggyBank,
+      image: savingsIllustration,
       title: "High-Yield Savings",
       description: "Earn 4.5% APY on your MUSD savings with no minimum balance required. Your money works for you while staying accessible whenever you need it."
     },
     {
-      icon: Zap,
+      image: paymentsIllustration,
       title: "Instant Payments",
       description: "Send money to friends, family, or businesses instantly with zero transaction fees. No delays, no hidden costs - just simple, fast payments."
     },
     {
-      icon: Globe,
+      image: remittanceIllustration,
       title: "International Remittances",
       description: "Send money globally without high fees or long wait times. Help your loved ones anywhere in the world with affordable, instant transfers."
     }
@@ -44,8 +46,12 @@ const UseCases = () => {
             >
               <div className="absolute inset-0 bg-gradient-to-br from-accent/10 via-transparent to-primary/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               <CardContent className="p-8 relative z-10">
-                <div className="flex items-center justify-center w-16 h-16 rounded-2xl bg-accent/10 mb-6 group-hover:scale-125 group-hover:rotate-12 transition-all duration-500 group-hover:shadow-[var(--shadow-glow)] group-hover:bg-[image:var(--gradient-accent)]">
-                  <useCase.icon className="w-8 h-8 text-accent group-hover:text-accent-foreground group-hover:animate-float transition-all duration-300" />
+                <div className="flex items-center justify-center w-24 h-24 rounded-2xl bg-primary/10 mb-6 group-hover:scale-110 transition-all duration-500 overflow-hidden">
+                  <img 
+                    src={useCase.image} 
+                    alt={useCase.title}
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                  />
                 </div>
 
                 <h3 className="text-xl font-semibold mb-3 text-foreground group-hover:text-accent transition-colors duration-500">
