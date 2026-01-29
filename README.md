@@ -189,12 +189,25 @@ Provides real-time price feeds for crypto assets.
 
 **Network Name:** Mezo Network  
 
-**RPC Endpoints:**
-- **HTTP:** `https://rpc-http.mezo.boar.network/` (via Boar Network)  
-- **WSS:** `wss://rpc-ws.mezo.boar.network/` (via Boar Network)
+Connect your wallet to Mezo Testnet (RPC: https://rpc.test.mezo.org, chain ID 31611).
+
+Get BTC + MEZO from faucet
+
+Open Mezo website (testnet) 
+
+Deposit testnet BTC as collateral 
+
+Borrow → Mint MUSD 
+
+MUSD appears in your wallet 
 
 **Block Explorer:**  
 [https://explorer.mezo.org](https://explorer.mezo.org)
+
+**Boar RPC Endpoints:**
+- **HTTP:** `https://rpc-http.mezo.boar.network/` (via Boar Network)  
+- **WSS:** `wss://rpc-ws.mezo.boar.network/` (via Boar Network)
+
 
 
 ## 3. Validation Cloud
