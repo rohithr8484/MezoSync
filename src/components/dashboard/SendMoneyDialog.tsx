@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
 import { Send, FileCode2, CheckCircle2, Wallet } from "lucide-react";
-import { useAccount, useBalance } from "wagmi";
+import { useAccount } from "wagmi";
 import { supabase } from "@/integrations/supabase/client";
 import { usePaymentsContract } from "@/hooks/usePaymentsContract";
 import { Badge } from "@/components/ui/badge";
@@ -14,11 +14,11 @@ import { Link } from "react-router-dom";
 interface SendMoneyDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  availableBalance: number;
 }
 
-const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
+const SendMoneyDialog = ({ open, onOpenChange, availableBalance }: SendMoneyDialogProps) => {
   const { address, isConnected } = useAccount();
-  const { data: balanceData } = useBalance({ address });
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
@@ -28,9 +28,7 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
   const { sendPayment, isPending, isConfirming, isSuccess, transactionHash } = usePaymentsContract();
 
   // Format balance for display
-  const formattedBalance = balanceData 
-    ? parseFloat(balanceData.formatted).toFixed(2) 
-    : "0.00";
+  const formattedBalance = availableBalance.toFixed(2);
 
   const handleSend = async () => {
     if (!recipient || !amount || !address) {

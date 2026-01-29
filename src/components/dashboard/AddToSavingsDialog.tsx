@@ -4,7 +4,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useAccount, useBalance } from "wagmi";
+import { useAccount } from "wagmi";
 import { supabase } from "@/integrations/supabase/client";
 import { Wallet, PiggyBank } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -14,16 +14,16 @@ interface AddToSavingsDialogProps {
   onOpenChange: (open: boolean) => void;
   currentSavings: number;
   onSavingsAdded: (amount: number) => void;
+  availableBalance: number;
 }
 
-const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded }: AddToSavingsDialogProps) => {
+const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded, availableBalance }: AddToSavingsDialogProps) => {
   const { address, isConnected } = useAccount();
-  const { data: balanceData } = useBalance({ address });
   const [amount, setAmount] = useState("");
   const [isAdding, setIsAdding] = useState(false);
   
-  // Use real balance from wallet, default to 0 if not available
-  const mainBalance = balanceData ? parseFloat(balanceData.formatted) : 0;
+  // Use provided balance prop
+  const mainBalance = availableBalance;
   const apy = 4.5;
 
   const amountNum = parseFloat(amount) || 0;

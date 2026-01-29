@@ -5,11 +5,22 @@ import { useState } from "react";
 import SendMoneyDialog from "./SendMoneyDialog";
 import ReceiveMoneyDialog from "./ReceiveMoneyDialog";
 import AddToSavingsDialog from "./AddToSavingsDialog";
+import { useAccount, useBalance } from "wagmi";
 
-const QuickActions = ({ currentSavings, onSavingsAdded }: { currentSavings: number; onSavingsAdded: (amount: number) => void }) => {
+interface QuickActionsProps {
+  currentSavings: number;
+  onSavingsAdded: (amount: number) => void;
+}
+
+const QuickActions = ({ currentSavings, onSavingsAdded }: QuickActionsProps) => {
+  const { address } = useAccount();
+  const { data: nativeBalance } = useBalance({ address });
   const [sendDialogOpen, setSendDialogOpen] = useState(false);
   const [receiveDialogOpen, setReceiveDialogOpen] = useState(false);
   const [saveDialogOpen, setSaveDialogOpen] = useState(false);
+
+  // Use native balance from wallet as available MUSD (for now)
+  const availableMUSD = nativeBalance ? parseFloat(nativeBalance.formatted) : 0;
 
   const actions = [
     {
@@ -64,13 +75,18 @@ const QuickActions = ({ currentSavings, onSavingsAdded }: { currentSavings: numb
         </CardContent>
       </Card>
 
-      <SendMoneyDialog open={sendDialogOpen} onOpenChange={setSendDialogOpen} />
+      <SendMoneyDialog 
+        open={sendDialogOpen} 
+        onOpenChange={setSendDialogOpen}
+        availableBalance={availableMUSD}
+      />
       <ReceiveMoneyDialog open={receiveDialogOpen} onOpenChange={setReceiveDialogOpen} />
       <AddToSavingsDialog 
         open={saveDialogOpen} 
         onOpenChange={setSaveDialogOpen}
         currentSavings={currentSavings}
         onSavingsAdded={onSavingsAdded}
+        availableBalance={availableMUSD}
       />
     </>
   );
