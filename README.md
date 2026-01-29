@@ -191,7 +191,7 @@ Provides real-time price feeds for crypto assets.
 
 Connect your wallet to Mezo Testnet (RPC: https://rpc.test.mezo.org, chain ID 31611).
 
-Get BTC + MEZO from faucet
+Get BTC + MEZO from faucet ( https://faucet.test.mezo.org/ )
 
 Open Mezo website (testnet) 
 
