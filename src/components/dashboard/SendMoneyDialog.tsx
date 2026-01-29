@@ -4,11 +4,12 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
-import { Send, FileCode2, CheckCircle2 } from "lucide-react";
-import { useAccount } from "wagmi";
+import { Send, FileCode2, CheckCircle2, Wallet } from "lucide-react";
+import { useAccount, useBalance } from "wagmi";
 import { supabase } from "@/integrations/supabase/client";
 import { usePaymentsContract } from "@/hooks/usePaymentsContract";
 import { Badge } from "@/components/ui/badge";
+import { Link } from "react-router-dom";
 
 interface SendMoneyDialogProps {
   open: boolean;
@@ -16,7 +17,8 @@ interface SendMoneyDialogProps {
 }
 
 const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { data: balanceData } = useBalance({ address });
   const [recipient, setRecipient] = useState("");
   const [amount, setAmount] = useState("");
   const [note, setNote] = useState("");
@@ -25,9 +27,20 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
   // Smart contract integration
   const { sendPayment, isPending, isConfirming, isSuccess, transactionHash } = usePaymentsContract();
 
+  // Format balance for display
+  const formattedBalance = balanceData 
+    ? parseFloat(balanceData.formatted).toFixed(2) 
+    : "0.00";
+
   const handleSend = async () => {
     if (!recipient || !amount || !address) {
       toast.error("Please fill in all required fields");
+      return;
+    }
+
+    // Validate recipient address format
+    if (!recipient.startsWith("0x") || recipient.length !== 42) {
+      toast.error("Please enter a valid wallet address (0x...)");
       return;
     }
 
@@ -35,8 +48,6 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
     
     try {
       // Attempt smart contract payment (if contract is deployed)
-      // For now, this will trigger the transaction but may fail if contract not deployed
-      // The UI still records the transaction in the database
       try {
         await sendPayment(recipient, amount, note);
       } catch (contractError) {
@@ -57,7 +68,7 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
       if (error) throw error;
 
       toast.success("MUSD sent successfully!", {
-        description: `Sent ${amount} MUSD to ${recipient}`
+        description: `Sent ${amount} MUSD to ${recipient.slice(0, 6)}...${recipient.slice(-4)}`
       });
       
       onOpenChange(false);
@@ -71,6 +82,41 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
       setIsSending(false);
     }
   };
+
+  // Show connect wallet prompt if not connected
+  if (!isConnected || !address) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <Send className="w-5 h-5 text-accent" />
+              Send MUSD
+            </DialogTitle>
+            <DialogDescription>
+              Connect your wallet to send MUSD
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-6 py-4">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 mx-auto rounded-full bg-accent/10 flex items-center justify-center">
+                <Wallet className="w-8 h-8 text-accent" />
+              </div>
+              <p className="text-muted-foreground">
+                Please connect your wallet first to send MUSD to others.
+              </p>
+              <Link to="/wallet">
+                <Button variant="hero" className="w-full">
+                  Connect Wallet
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -97,10 +143,10 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="recipient">Recipient Address or Username</Label>
+            <Label htmlFor="recipient">Recipient Wallet Address</Label>
             <Input
               id="recipient"
-              placeholder="0x... or username"
+              placeholder="0x..."
               value={recipient}
               onChange={(e) => setRecipient(e.target.value)}
             />
@@ -116,7 +162,7 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
               onChange={(e) => setAmount(e.target.value)}
             />
             <p className="text-xs text-muted-foreground">
-              Available: 5,234.50 MUSD
+              Available: {formattedBalance} MUSD
             </p>
           </div>
 
@@ -151,7 +197,7 @@ const SendMoneyDialog = ({ open, onOpenChange }: SendMoneyDialogProps) => {
 
           <Button
             onClick={handleSend}
-            disabled={isSending || isPending || isConfirming}
+            disabled={isSending || isPending || isConfirming || !recipient || !amount}
             variant="hero"
             size="lg"
             className="w-full"

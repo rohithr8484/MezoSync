@@ -4,8 +4,10 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useAccount } from "wagmi";
+import { useAccount, useBalance } from "wagmi";
 import { supabase } from "@/integrations/supabase/client";
+import { Wallet, PiggyBank } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface AddToSavingsDialogProps {
   open: boolean;
@@ -15,12 +17,13 @@ interface AddToSavingsDialogProps {
 }
 
 const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded }: AddToSavingsDialogProps) => {
-  const { address } = useAccount();
+  const { address, isConnected } = useAccount();
+  const { data: balanceData } = useBalance({ address });
   const [amount, setAmount] = useState("");
   const [isAdding, setIsAdding] = useState(false);
   
-  // Mock data - in production, fetch from blockchain
-  const mainBalance = 5234.50;
+  // Use real balance from wallet, default to 0 if not available
+  const mainBalance = balanceData ? parseFloat(balanceData.formatted) : 0;
   const apy = 4.5;
 
   const amountNum = parseFloat(amount) || 0;
@@ -60,7 +63,7 @@ const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded
 
       onSavingsAdded(amountNum);
       toast.success(`Successfully added ${amountNum.toFixed(2)} MUSD to savings`, {
-        description: `Your savings balance is now $${newSavingsBalance.toFixed(2)} MUSD`
+        description: `Your savings balance is now ${newSavingsBalance.toFixed(2)} MUSD`
       });
       setAmount("");
       onOpenChange(false);
@@ -72,11 +75,49 @@ const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded
     }
   };
 
+  // Show connect wallet prompt if not connected
+  if (!isConnected || !address) {
+    return (
+      <Dialog open={open} onOpenChange={onOpenChange}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle className="flex items-center gap-2">
+              <PiggyBank className="w-5 h-5 text-accent" />
+              Add to Savings
+            </DialogTitle>
+            <DialogDescription>
+              Connect your wallet to add to savings
+            </DialogDescription>
+          </DialogHeader>
+
+          <div className="space-y-6 py-4">
+            <div className="text-center space-y-4">
+              <div className="w-16 h-16 mx-auto rounded-full bg-accent/10 flex items-center justify-center">
+                <Wallet className="w-8 h-8 text-accent" />
+              </div>
+              <p className="text-muted-foreground">
+                Please connect your wallet first to transfer MUSD to your savings account.
+              </p>
+              <Link to="/wallet">
+                <Button variant="hero" className="w-full">
+                  Connect Wallet
+                </Button>
+              </Link>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+    );
+  }
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Add to Savings</DialogTitle>
+          <DialogTitle className="flex items-center gap-2">
+            <PiggyBank className="w-5 h-5 text-accent" />
+            Add to Savings
+          </DialogTitle>
           <DialogDescription>
             Transfer MUSD from your main balance to your savings account
           </DialogDescription>
@@ -101,14 +142,14 @@ const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
-              Available: ${mainBalance.toFixed(2)} MUSD
+              Available: {mainBalance.toFixed(2)} MUSD
             </p>
           </div>
 
           <div className="rounded-lg bg-accent/5 p-4 space-y-2 text-sm">
             <div className="flex justify-between">
               <span className="text-muted-foreground">Current Savings</span>
-              <span className="font-medium">${currentSavings.toFixed(2)} MUSD</span>
+              <span className="font-medium">{currentSavings.toFixed(2)} MUSD</span>
             </div>
             <div className="flex justify-between">
               <span className="text-muted-foreground">APY Rate</span>
@@ -122,19 +163,19 @@ const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Main Balance</span>
                 <span className={`font-medium ${newMainBalance < 0 ? 'text-destructive' : 'text-foreground'}`}>
-                  ${newMainBalance.toFixed(2)} MUSD
+                  {newMainBalance.toFixed(2)} MUSD
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">Savings Balance</span>
                 <span className="font-medium text-green-600">
-                  ${newSavingsBalance.toFixed(2)} MUSD
+                  {newSavingsBalance.toFixed(2)} MUSD
                 </span>
               </div>
               <div className="flex justify-between pt-2 border-t border-accent/20">
                 <span className="text-muted-foreground">Estimated Annual Interest</span>
                 <span className="font-medium text-green-600">
-                  +${(newSavingsBalance * (apy / 100)).toFixed(2)} MUSD
+                  +{(newSavingsBalance * (apy / 100)).toFixed(2)} MUSD
                 </span>
               </div>
             </div>
@@ -148,7 +189,7 @@ const AddToSavingsDialog = ({ open, onOpenChange, currentSavings, onSavingsAdded
           <Button 
             variant="hero" 
             onClick={handleAddToSavings} 
-            disabled={isAdding}
+            disabled={isAdding || amountNum <= 0 || amountNum > mainBalance}
             className="flex-1"
           >
             {isAdding ? "Adding..." : "Add to Savings"}
