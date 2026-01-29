@@ -4,12 +4,23 @@ import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
 import { useState } from "react";
 import AddToSavingsDialog from "./AddToSavingsDialog";
+import { useAccount, useBalance } from "wagmi";
 
-const SavingsOverview = ({ savingsBalance, onSavingsAdded }: { savingsBalance: number; onSavingsAdded: (amount: number) => void }) => {
+interface SavingsOverviewProps {
+  savingsBalance: number;
+  onSavingsAdded: (amount: number) => void;
+}
+
+const SavingsOverview = ({ savingsBalance, onSavingsAdded }: SavingsOverviewProps) => {
+  const { address } = useAccount();
+  const { data: nativeBalance } = useBalance({ address });
   const [addDialogOpen, setAddDialogOpen] = useState(false);
   const savingsGoal = 5000.00;
   const progress = (savingsBalance / savingsGoal) * 100;
   const apy = "4.5%";
+  
+  // Get available balance from wallet
+  const availableBalance = nativeBalance ? parseFloat(nativeBalance.formatted) : 0;
 
   return (
     <div className="space-y-6">
@@ -55,6 +66,7 @@ const SavingsOverview = ({ savingsBalance, onSavingsAdded }: { savingsBalance: n
         onOpenChange={setAddDialogOpen}
         currentSavings={savingsBalance}
         onSavingsAdded={onSavingsAdded}
+        availableBalance={availableBalance}
       />
 
       <Card>
