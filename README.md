@@ -1,4 +1,4 @@
-# Mezo Sync - Simple Financial Services
+# Mezo Sync - Simple Financial Services - Send, Receive, Save MUSD and use your MUSD to pay bills directly from your wallet.
 
 Mezo Sync is a Bitcoin-powered financial experience layer that makes saving and payments feel as simple as modern banking while preserving on-chain transparency and user control. Through Smart Savings, users can put their MUSD to work in high-yield savings accounts, earning a 4.5% annual return with no lock-ups and the freedom to withdraw anytime, all while maintaining the stability of a trusted stablecoin.
 
