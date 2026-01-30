@@ -4,17 +4,16 @@ Mezo Sync is a Bitcoin-powered financial experience layer that makes saving and 
 
 Mezo Sync enables instant, zero-fee MUSD transfers, allowing users to split and pay bills, pay friends or send MUSD globally in seconds. By combining seamless payments with automated savings growth, Mezo Sync delivers a fast, intuitive, and reliable financial layer built for everyday use—powered by Bitcoin-grade security and efficiency.
 
-
-- Bitcoin-powered financial experience layer:
+**Bitcoin-powered financial experience layer**
 A consumer-friendly app that makes saving and payments feel as simple as modern banking while preserving on-chain transparency and user control. 
 
-- Smart Savings with MUSD:
-Users can deposit MUSD into high-yield savings accounts earning 4.5% annual returns.
-
-- Send & Request payments:
+**Send & Request payments**
 Enables instant, zero-fee MUSD transfers for everyday use cases such as bill splitting, peer payments, and global transfers.
 
-- Automated savings growth:
+**Smart Savings with MUSD**
+Users can deposit MUSD into high-yield savings accounts earning 4.5% annual returns.
+
+**Automated savings growth**:
 Seamlessly combines daily payments with passive savings growth in a single experience.
 
 Bank-like simplicity, on-chain transparency
